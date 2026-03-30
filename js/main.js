@@ -34,7 +34,7 @@ const TRANSLATIONS = {
     thesisDesc:     "A comprehensive animated short film developed as my Bachelor's thesis, covering the full production pipeline from concept to final render.",
     /* Animation */
     animTitle:      '3D Animation',
-    reelLabel:      'Animation Reel 2025',
+    reelLabel:      'Animation Reel 2026',
     reelSub:        'Video will be embedded here',
     tabStepped:     'Stepped',
     tabSpline:      'Spline',
@@ -80,6 +80,7 @@ const TRANSLATIONS = {
     tl2020: 'Enrolled in Animation degree 🎓',
     tl2024: 'Thesis project development 📽️',
     tl2025: 'Graduation & new adventures ✨',
+    tl2026: 'Building my professional career 🚀',
   },
   es: {
     /* Nav */
@@ -108,7 +109,7 @@ const TRANSLATIONS = {
     thesisDesc:     'Un cortometraje animado completo desarrollado como TFG, que cubre el pipeline de producción completo desde el concepto hasta el renderizado final.',
     /* Animation */
     animTitle:      'Animación 3D',
-    reelLabel:      'Reel de Animación 2025',
+    reelLabel:      'Reel de Animación 2026',
     reelSub:        'El vídeo se incrustará aquí',
     tabStepped:     'Escalonado',
     tabSpline:      'Spline',
@@ -154,6 +155,7 @@ const TRANSLATIONS = {
     tl2020: 'Ingresó en el Grado de Animación 🎓',
     tl2024: 'Desarrollo del proyecto de TFG 📽️',
     tl2025: 'Graduación y nuevas aventuras ✨',
+    tl2026: 'Construyendo mi carrera profesional 🚀',
   },
 };
 
@@ -768,4 +770,24 @@ window.addEventListener('load', () => {
       }
     }
   }
+
+  /* Dynamic footer year */
+  const footerYear = $('#footer-year');
+  if (footerYear) footerYear.textContent = new Date().getFullYear();
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   BACK TO TOP BUTTON
+   ═══════════════════════════════════════════════════════════════ */
+(function initBackToTop() {
+  const btn = $('#back-to-top');
+  if (!btn) return;
+
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();

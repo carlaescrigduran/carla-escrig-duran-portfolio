@@ -1,16 +1,4 @@
-/* ================================
-   Carla Escrig Durán — Portfolio JS
-   - Dark mode with persistence
-   - EN/ES translations (dynamic update)
-   - Timeline rendering (2002–2026)
-   - Thesis phases rendering (KAIROS)
-   - Animation reel embed (Vimeo)
-   - Gallery tabs scaffold (Stepped/Spline/Polish) [placeholders]
-   - Contact form success message + social links
-   ================================= */
-
 const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
 const STORAGE_KEYS = {
   theme: "carla_portfolio_theme",
@@ -23,21 +11,22 @@ const state = {
   animationTab: "stepped",
 };
 
+const yearColors = {
+  "2002": "linear-gradient(135deg, #ff6b6b, #ffa07a)",
+  "2010": "linear-gradient(135deg, #ffe66d, #ffa07a)",
+  "2015": "linear-gradient(135deg, #4ecdc4, #a8e6cf)",
+  "2020": "linear-gradient(135deg, #667eea, #764ba2)",
+  "2024": "linear-gradient(135deg, #4ecdc4, #667eea)",
+  "2026": "linear-gradient(135deg, #ffa07a, #667eea)",
+};
+
 const CONTENT = {
   heroName: "Carla Escrig Durán",
   subtitle: {
     en: "3D animator & Visual Development artist",
-    es: "3D animator & Visual Development artist", // (si quieres traducción ES distinta, dímela y lo cambio)
+    es: "Animación 3D y Visual Development",
   },
-  welcome: {
-    en: "", // opcional
-    es: "", // opcional
-  },
-
-  aboutBio: {
-    en: "", // pendiente de tu bio EN
-    es: "", // pendiente de tu bio ES
-  },
+  welcome: { en: "", es: "" },
 
   reelVimeoUrl: "https://vimeo.com/1144153174?share=copy&fl=sv&fe=ci",
 
@@ -64,23 +53,35 @@ const i18n = {
     personalTitle: "PERSONAL WORK",
     contactTitle: "CONTACT",
 
-    jumpTo: "Skip to content",
     ctaContact: "Contact",
     ctaReel: "Watch reel",
-
-    thesisProjectName: "KAIROS",
-    thesisProjectIntro:
-      "My thesis project was a collaborative journey through the complete animation pipeline. From initial concept sketches to final compositing, I contributed across multiple departments to bring our story to life. Below you can explore my work organized by production phase.",
 
     tabsStepped: "Stepped",
     tabsSpline: "Spline",
     tabsPolish: "Polish",
+
+    thesisProjectName: "KAIROS",
+    thesisProjectIntro:
+      "My thesis project was a collaborative journey through the complete animation pipeline. From initial concept sketches to final compositing, I contributed across multiple departments to bring our story to life. Below you can explore my work organized by production phase.",
 
     contactName: "Name:",
     contactEmail: "Email:",
     contactMessage: "Message:",
     contactSend: "Send",
     formSuccess: (name) => `Thanks, ${name}! Your message has been sent.`,
+
+    modalPet: "The Pet Medium",
+    modalMerce: "Mercè: Barcelona Màgica",
+    modalPlaceholder: "Content will appear here once you share your images/videos (Imgur/Vimeo).",
+    modalSubBrief: "The Brief",
+    modalSubCharacters: "Character Exploration",
+    modalSubProps: "Props & Vehicles",
+    modalSubEnv: "Environment & Lighting",
+    modalSubInspo: "Inspiration",
+    modalSubChar: "Character Design",
+    modalSubEnv2: "Environment Design",
+    modalSubProps2: "Props & Details",
+    modalSubFinal: "Final Illustrations",
   },
 
   es: {
@@ -96,182 +97,180 @@ const i18n = {
     personalTitle: "TRABAJO PERSONAL",
     contactTitle: "CONTACTO",
 
-    jumpTo: "Saltar al contenido",
     ctaContact: "Contacto",
     ctaReel: "Ver reel",
-
-    thesisProjectName: "KAIROS",
-    thesisProjectIntro:
-      "Mi proyecto de tesis fue un viaje colaborativo a través de todo el pipeline de animación. Desde los primeros bocetos conceptuales hasta el compositing final, contribuí en múltiples departamentos para dar vida a nuestra historia. Aquí puedes explorar mi trabajo organizado por fases de producción.",
 
     tabsStepped: "Stepped",
     tabsSpline: "Spline",
     tabsPolish: "Polish",
+
+    thesisProjectName: "KAIROS",
+    thesisProjectIntro:
+      "Mi proyecto de tesis fue un viaje colaborativo a través de todo el pipeline de animación. Desde los primeros bocetos conceptuales hasta el compositing final, contribuí en múltiples departamentos para dar vida a nuestra historia. Aquí puedes explorar mi trabajo organizado por fases de producción.",
 
     contactName: "Nombre:",
     contactEmail: "Email:",
     contactMessage: "Mensaje:",
     contactSend: "Enviar",
     formSuccess: (name) => `¡Gracias, ${name}! Tu mensaje se ha enviado.`,
+
+    modalPet: "The Pet Medium",
+    modalMerce: "Mercè: Barcelona Màgica",
+    modalPlaceholder: "El contenido aparecerá aquí cuando compartas tus imágenes/vídeos (Imgur/Vimeo).",
+    modalSubBrief: "El brief",
+    modalSubCharacters: "Exploración de personajes",
+    modalSubProps: "Props y vehículos",
+    modalSubEnv: "Entorno e iluminación",
+    modalSubInspo: "Inspiración",
+    modalSubChar: "Diseño de personaje",
+    modalSubEnv2: "Diseño de entorno",
+    modalSubProps2: "Props y detalles",
+    modalSubFinal: "Ilustraciones finales",
   },
 };
 
 const timelineData = [
   {
     year: "2002",
-    title_en: "The Beginning",
-    title_es: "The Beginning",
-    text_en:
-      "I was born on the 24th of June in 2002, in Barcelona, Spain. I was a naturally curious child and was fascinated by art at a very young age.",
-    text_es:
-      "I was born on the 24th of June in 2002, in Barcelona, Spain. I was a naturally curious child and was fascinated by art at a very young age.",
+    title: { en: "The Beginning", es: "El inicio" },
+    text: {
+      en: "I was born on the 24th of June in 2002, in Barcelona, Spain. I was a naturally curious child and was fascinated by art at a very young age.",
+      es: "Nací el 24 de junio de 2002 en Barcelona, España. Desde muy pequeña fui curiosa y el arte me fascinó desde temprano.",
+    },
+    media: null, // later: { type: "img", src: "https://i.imgur.com/....jpg", alt: "..." }
   },
   {
     year: "2010",
-    title_en: "First Steps in Art",
-    title_es: "First Steps in Art",
-    text_en:
-      "I started exploring drawing and painting. Like all children, I was mesmerized by animated films, and I spent my days drawing princesses, dragons, mermaids, etc.",
-    text_es:
-      "I started exploring drawing and painting. Like all children, I was mesmerized by animated films, and I spent my days drawing princesses, dragons, mermaids, etc.",
+    title: { en: "First Steps in Art", es: "Primeros pasos en el arte" },
+    text: {
+      en: "I started exploring drawing and painting. Like all children, I was mesmerized by animated films, and I spent my days drawing princesses, dragons, mermaids, etc.",
+      es: "Empecé a explorar el dibujo y la pintura. Como a cualquier niña, me encantaban las pelis de animación y pasaba el día dibujando princesas, dragones, sirenas, etc.",
+    },
+    media: null,
   },
   {
     year: "2015",
-    title_en: "Diving into Animation",
-    title_es: "Diving into Animation",
-    text_en:
-      "At that time, I was a fresh teenager, and my personal interests started to flourish. This is when I began to educate myself about the Animation Industry. I knew from that point that I wanted to dedicate my life to this.",
-    text_es:
-      "At that time, I was a fresh teenager, and my personal interests started to flourish. This is when I began to educate myself about the Animation Industry. I knew from that point that I wanted to dedicate my life to this.",
+    title: { en: "Diving into Animation", es: "Sumergiéndome en la animación" },
+    text: {
+      en: "As a teenager, my interests started to flourish. I began educating myself about the animation industry, and I knew I wanted to dedicate my life to it.",
+      es: "En la adolescencia mis intereses empezaron a crecer. Empecé a aprender por mi cuenta sobre la industria de la animación y supe que quería dedicarme a ello.",
+    },
+    media: null,
   },
   {
     year: "2020",
-    title_en: "Professional Development",
-    title_es: "Professional Development",
-    text_en:
-      "My first year of college! I was so excited and grateful to be able to study what I had always wanted. I completed the 3D Animation & VFX degree at LaSalle URL. I met amazing colleagues and teachers, and I made super talented friends that we catch up with to this day! Truly, the best years of my life.",
-    text_es:
-      "My first year of college! I was so excited and grateful to be able to study what I had always wanted. I completed the 3D Animation & VFX degree at LaSalle URL. I met amazing colleagues and teachers, and I made super talented friends that we catch up with to this day! Truly, the best years of my life.",
+    title: { en: "Professional Development", es: "Desarrollo profesional" },
+    text: {
+      en: "My first year of college. I completed the 3D Animation & VFX degree at LaSalle URL and met amazing colleagues and teachers.",
+      es: "Mi primer año de universidad. Cursé el grado de Animación 3D y VFX en LaSalle URL y conocí a compañeras/os y profes increíbles.",
+    },
+    media: null,
   },
   {
     year: "2024",
-    title_en: "Thesis & Specialization",
-    title_es: "Thesis & Specialization",
-    text_en:
-      "This year, we started working on our thesis project, where I collaborated on character designs, backgrounds, props, storyboards, animatics, texturing, visual effects, and my favorite, 3D animation! It was hard but so fulfilling in the end. You can see more at Thesis Work.",
-    text_es:
-      "This year, we started working on our thesis project, where I collaborated on character designs, backgrounds, props, storyboards, animatics, texturing, visual effects, and my favorite, 3D animation! It was hard but so fulfilling in the end. You can see more at Thesis Work.",
+    title: { en: "Thesis & Specialization", es: "Tesis y especialización" },
+    text: {
+      en: "We started our thesis project. I collaborated on designs, backgrounds, props, storyboards, animatics, texturing, VFX and 3D animation.",
+      es: "Empezamos el proyecto de tesis. Participé en diseño, fondos, props, storyboards, animatics, texturizado, VFX y animación 3D.",
+    },
+    media: null,
   },
   {
     year: "2026",
-    title_en: "Looking Forward",
-    title_es: "Looking Forward",
-    text_en:
-      "Between 2024 and 2025, I completed a Master's in 3D Animation for Characters that taught me new things and further developed what I had previously studied in college. Now, I'm looking forward to making my first appearance in the animation industry, and I'm so ready to start my journey!",
-    text_es:
-      "Between 2024 and 2025, I completed a Master's in 3D Animation for Characters that taught me new things and further developed what I had previously studied in college. Now, I'm looking forward to making my first appearance in the animation industry, and I'm so ready to start my journey!",
+    title: { en: "Looking Forward", es: "Mirando al futuro" },
+    text: {
+      en: "After completing a Master's in 3D Animation for Characters, I’m ready to start my journey in the animation industry.",
+      es: "Tras completar un Máster en Animación 3D de personajes, estoy lista para empezar mi camino en la industria de la animación.",
+    },
+    media: null,
   },
 ];
 
 const thesisPhases = [
   {
-    group: "FINAL RESULT",
-    phase: "Complete Short Film",
-    title_en: "Complete Short Film",
-    title_es: "Corto final",
-    desc_en: "The culmination of our team's hard work - watch the final animated short film.",
-    desc_es: "El resultado de todo el trabajo del equipo: mira el corto final.",
-    badge: "Final",
+    group: { en: "FINAL RESULT", es: "RESULTADO FINAL" },
+    phase: { en: "Complete Short Film", es: "Corto completo" },
+    title: { en: "Complete Short Film", es: "Corto final" },
+    desc: {
+      en: "The culmination of our team's hard work - watch the final animated short film.",
+      es: "El resultado final del trabajo del equipo: mira el corto final.",
+    },
   },
   {
-    group: "PRE-PRODUCTION",
-    phase: "PHASE 1",
-    title_en: "Concept Art",
-    title_es: "Concept Art",
-    desc_en:
-      "Character designs, environment concepts, and visual development exploring the look and feel of our story world.",
-    desc_es:
-      "Diseño de personajes, conceptos de entorno y desarrollo visual para definir el look & feel del mundo.",
-    badge: "Pre",
-  },
-  // Te repetían PHASE 1 dos veces en el texto; lo dejo una sola vez y continúo con el resto.
-  {
-    group: "PRODUCTION",
-    phase: "PHASE 3",
-    title_en: "Animatic",
-    title_es: "Animatic",
-    desc_en:
-      "Bringing the storyboard to life with timing, pacing, and rough audio to establish the rhythm of our film.",
-    desc_es:
-      "Dando vida al storyboard con timing, ritmo y audio provisional para marcar la estructura del corto.",
-    badge: "Prod",
+    group: { en: "PRE-PRODUCTION", es: "PREPRODUCCIÓN" },
+    phase: { en: "PHASE 1", es: "FASE 1" },
+    title: { en: "Concept Art", es: "Concept Art" },
+    desc: {
+      en: "Character designs, environment concepts, and visual development exploring the look and feel of our story world.",
+      es: "Diseño de personajes, conceptos de entorno y desarrollo visual para definir el look & feel del mundo.",
+    },
   },
   {
-    group: "PRODUCTION",
-    phase: "PHASE 4",
-    title_en: "Layout",
-    title_es: "Layout",
-    desc_en:
-      "3D scene composition and camera work - establishing the staging and cinematography for each shot.",
-    desc_es:
-      "Composición 3D y cámaras: planteamiento de escena y cinematografía por plano.",
-    badge: "Prod",
+    group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
+    phase: { en: "PHASE 3", es: "FASE 3" },
+    title: { en: "Animatic", es: "Animatic" },
+    desc: {
+      en: "Bringing the storyboard to life with timing, pacing, and rough audio to establish the rhythm of our film.",
+      es: "Dando vida al storyboard con timing, ritmo y audio provisional para definir la estructura del corto.",
+    },
   },
   {
-    group: "PRODUCTION",
-    phase: "PHASE 5",
-    title_en: "3D Animation",
-    title_es: "Animación 3D",
-    desc_en:
-      "Character performance and movement - bringing emotion and life to every shot through animation.",
-    desc_es:
-      "Acting y movimiento: emoción y vida en cada plano a través de la animación.",
-    badge: "Prod",
+    group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
+    phase: { en: "PHASE 4", es: "FASE 4" },
+    title: { en: "Layout", es: "Layout" },
+    desc: {
+      en: "3D scene composition and camera work - establishing the staging and cinematography for each shot.",
+      es: "Composición 3D y cámaras: planteamiento y cinematografía por plano.",
+    },
   },
   {
-    group: "POST-PRODUCTION",
-    phase: "PHASE 6",
-    title_en: "Visual Effects",
-    title_es: "Efectos visuales",
-    desc_en:
-      "Adding magic and atmosphere - particle systems, simulations, and effects that enhance the story.",
-    desc_es:
-      "Magia y atmósfera: partículas, simulaciones y efectos que potencian la historia.",
-    badge: "Post",
+    group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
+    phase: { en: "PHASE 5", es: "FASE 5" },
+    title: { en: "3D Animation", es: "Animación 3D" },
+    desc: {
+      en: "Character performance and movement - bringing emotion and life to every shot through animation.",
+      es: "Acting y movimiento: emoción y vida en cada plano a través de la animación.",
+    },
   },
   {
-    group: "POST-PRODUCTION",
-    phase: "PHASE 7",
-    title_en: "Graphic Design",
-    title_es: "Diseño gráfico",
-    desc_en:
-      "Marketing and promotional materials - posters, titles, and branding that represent our project.",
-    desc_es:
-      "Material promocional: pósters, títulos e identidad visual del proyecto.",
-    badge: "Post",
+    group: { en: "POST-PRODUCTION", es: "POSTPRODUCCIÓN" },
+    phase: { en: "PHASE 6", es: "FASE 6" },
+    title: { en: "Visual Effects", es: "Efectos visuales" },
+    desc: {
+      en: "Adding magic and atmosphere - particle systems, simulations, and effects that enhance the story.",
+      es: "Magia y atmósfera: partículas, simulaciones y efectos que potencian la historia.",
+    },
+  },
+  {
+    group: { en: "POST-PRODUCTION", es: "POSTPRODUCCIÓN" },
+    phase: { en: "PHASE 7", es: "FASE 7" },
+    title: { en: "Graphic Design", es: "Diseño gráfico" },
+    desc: {
+      en: "Marketing and promotional materials - posters, titles, and branding that represent our project.",
+      es: "Material promocional: pósters, títulos e identidad del proyecto.",
+    },
   },
 ];
-
-// Placeholder galleries (rellenar cuando me des tus items)
-const animationGalleries = {
-  stepped: [],
-  spline: [],
-  polish: [],
-};
 
 function loadPrefs() {
   const savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
   const savedLang = localStorage.getItem(STORAGE_KEYS.lang);
-
   if (savedTheme === "dark" || savedTheme === "light") state.theme = savedTheme;
   if (savedLang === "en" || savedLang === "es") state.lang = savedLang;
 }
 
 function applyTheme() {
   document.documentElement.dataset.theme = state.theme;
+
+  const fab = $("#fab-theme");
+  if (fab) fab.textContent = state.theme === "dark" ? "☀️" : "🌙";
 }
 
 function toggleTheme() {
+  const fab = $("#fab-theme");
+  fab?.classList.add("is-rotating");
+  setTimeout(() => fab?.classList.remove("is-rotating"), 560);
+
   state.theme = state.theme === "dark" ? "light" : "dark";
   localStorage.setItem(STORAGE_KEYS.theme, state.theme);
   applyTheme();
@@ -280,113 +279,70 @@ function toggleTheme() {
 function setLang(lang) {
   state.lang = lang;
   localStorage.setItem(STORAGE_KEYS.lang, state.lang);
-  renderI18n();
-  renderTimeline();
-  renderThesis();
-  renderReel();
-  renderAnimationTabs();
-  renderContactSocial();
+  renderAll();
 }
 
 function toggleLang() {
   setLang(state.lang === "en" ? "es" : "en");
 }
 
-function safeText(el, value) {
-  if (el) el.textContent = value;
-}
-
-function renderI18n() {
-  const t = i18n[state.lang];
-
-  // Toggle label shows current language
-  safeText($("#lang-toggle"), state.lang.toUpperCase());
-
-  // If nav has h1
-  if ($("nav h1")) safeText($("nav h1"), t.navTitle);
-
-  // HOME
-  safeText($("#home h2"), t.homeTitle);
-  // Add hero content into home if not present yet
+function ensureHero() {
   const home = $("#home");
-  if (home && !home.querySelector(".hero")) {
+  if (!home) return;
+
+  if (!home.querySelector(".hero")) {
     const hero = document.createElement("div");
     hero.className = "hero";
-
     hero.innerHTML = `
       <h3 class="hero-name" id="hero-name"></h3>
       <p class="hero-subtitle" id="hero-subtitle"></p>
       <div class="hero-actions">
         <a class="btn" href="#contact" id="cta-contact"></a>
         <a class="btn btn--ghost" href="#animation" id="cta-reel"></a>
-        <div class="hero-chip" aria-label="Location">
-          <span>Barcelona, Spain</span>
-        </div>
+        <div class="hero-chip"><span>Barcelona, Spain</span></div>
       </div>
     `;
-    // Insert hero at the top of home section
     home.insertBefore(hero, home.firstChild.nextSibling);
   }
+}
 
-  safeText($("#hero-name"), CONTENT.heroName);
-  safeText($("#hero-subtitle"), CONTENT.subtitle[state.lang] || CONTENT.subtitle.en);
-  safeText($("#cta-contact"), t.ctaContact);
-  safeText($("#cta-reel"), t.ctaReel);
+function renderI18n() {
+  const t = i18n[state.lang];
 
-  // ABOUT / THESIS / etc headers
-  safeText($("#about h2"), t.aboutTitle);
-  safeText($("#thesis h2"), t.thesisTitle);
-  safeText($("#animation h2"), t.animationTitle);
-  safeText($("#visual-development h2"), t.visdevTitle);
-  safeText($("#storyboard h2"), t.storyboardTitle);
-  safeText($("#storyboard p"), t.storyboardSoon);
-  safeText($("#personal-work h2"), t.personalTitle);
-  safeText($("#contact h2"), t.contactTitle);
+  // top nav (if present)
+  const navH1 = $("nav h1");
+  if (navH1) navH1.textContent = t.navTitle;
+  const brandSmall = $("nav small");
+  if (brandSmall) brandSmall.textContent = t.brandSubtitle;
 
-  // Contact form labels
-  safeText($("label[for='name']"), t.contactName);
-  safeText($("label[for='email']"), t.contactEmail);
-  safeText($("label[for='message']"), t.contactMessage);
-  safeText($("#contact-form button[type='submit']"), t.contactSend);
+  // section headers
+  $("#home h2") && ($("#home h2").textContent = t.homeTitle);
+  $("#about h2") && ($("#about h2").textContent = t.aboutTitle);
+  $("#thesis h2") && ($("#thesis h2").textContent = t.thesisTitle);
+  $("#animation h2") && ($("#animation h2").textContent = t.animationTitle);
+  $("#visual-development h2") && ($("#visual-development h2").textContent = t.visdevTitle);
+  $("#storyboard h2") && ($("#storyboard h2").textContent = t.storyboardTitle);
+  $("#storyboard p") && ($("#storyboard p").textContent = t.storyboardSoon);
+  $("#personal-work h2") && ($("#personal-work h2").textContent = t.personalTitle);
+  $("#contact h2") && ($("#contact h2").textContent = t.contactTitle);
 
-  // Add About bio if provided
-  const about = $("#about");
-  if (about) {
-    let bio = about.querySelector("#about-bio");
-    if (!bio) {
-      bio = document.createElement("p");
-      bio.id = "about-bio";
-      bio.style.color = "var(--muted)";
-      about.insertBefore(bio, $("#timeline"));
-    }
-    bio.textContent = (CONTENT.aboutBio[state.lang] || "").trim();
-    // If empty, avoid awkward blank space
-    bio.style.display = bio.textContent ? "block" : "none";
-  }
+  // hero
+  ensureHero();
+  $("#hero-name") && ($("#hero-name").textContent = CONTENT.heroName);
+  $("#hero-subtitle") && ($("#hero-subtitle").textContent = CONTENT.subtitle[state.lang] || CONTENT.subtitle.en);
+  $("#cta-contact") && ($("#cta-contact").textContent = t.ctaContact);
+  $("#cta-reel") && ($("#cta-reel").textContent = t.ctaReel);
 
-  // Add Thesis intro block
-  const thesis = $("#thesis");
-  if (thesis) {
-    let intro = thesis.querySelector("#thesis-intro");
-    if (!intro) {
-      intro = document.createElement("div");
-      intro.id = "thesis-intro";
-      intro.className = "card";
-      intro.innerHTML = `
-        <p class="card-title" style="margin:0 0 8px;">
-          <strong id="thesis-name"></strong>
-          <span class="badge" id="thesis-badge">KAIROS</span>
-        </p>
-        <p id="thesis-text" style="margin:0;color:var(--muted)"></p>
-      `;
-      thesis.insertBefore(intro, thesis.firstChild.nextSibling);
-    }
-    safeText($("#thesis-name"), t.thesisProjectName);
-    safeText($("#thesis-text"), t.thesisProjectIntro);
-  }
+  // FAB lang icon stays 🌐
+  $("#fab-lang") && ($("#fab-lang").textContent = "🌐");
 
-  // Make the layout a bit nicer without editing index.html:
-  // add classes to form
+  // contact labels
+  $("label[for='name']") && ($("label[for='name']").textContent = t.contactName);
+  $("label[for='email']") && ($("label[for='email']").textContent = t.contactEmail);
+  $("label[for='message']") && ($("label[for='message']").textContent = t.contactMessage);
+  $("#contact-form button[type='submit']") && ($("#contact-form button[type='submit']").textContent = t.contactSend);
+
+  // Make sure form has class
   $("#contact-form")?.classList.add("form");
 }
 
@@ -397,64 +353,62 @@ function renderTimeline() {
   container.classList.add("timeline");
   container.innerHTML = "";
 
-  for (const item of timelineData) {
+  timelineData.forEach((item, idx) => {
     const card = document.createElement("div");
-    card.className = "timeline-item";
+    card.className = `timeline-item ${idx % 2 === 0 ? "is-left" : "is-right"}`;
+    card.style.setProperty("--dot", yearColors[item.year] || "var(--grad-mint)");
 
-    const year = document.createElement("p");
-    year.className = "timeline-year";
-    year.textContent = item.year;
+    const title = item.title[state.lang] || item.title.en;
+    const text = item.text[state.lang] || item.text.en;
 
-    const title = document.createElement("p");
-    title.style.margin = "0 0 6px";
-    title.style.fontWeight = "600";
-    title.textContent = state.lang === "en" ? item.title_en : item.title_es;
+    card.innerHTML = `
+      <p class="timeline-year">${item.year}</p>
+      <p style="margin:0 0 6px;font-weight:600">${title}</p>
+      <p class="timeline-text">${text}</p>
+    `;
 
-    const text = document.createElement("p");
-    text.className = "timeline-text";
-    text.textContent = state.lang === "en" ? item.text_en : item.text_es;
+    if (item.media) {
+      const media = document.createElement("div");
+      media.className = "timeline-media";
+      if (item.media.type === "img") {
+        media.innerHTML = `<img loading="lazy" src="${item.media.src}" alt="${item.media.alt || title}">`;
+      } else if (item.media.type === "video") {
+        media.innerHTML = `<iframe loading="lazy" src="${item.media.src}" title="${title}" allow="autoplay; fullscreen; picture-in-picture"></iframe>`;
+      }
+      card.appendChild(media);
+    }
 
-    card.appendChild(year);
-    card.appendChild(title);
-    card.appendChild(text);
     container.appendChild(card);
-  }
+  });
 }
 
 function renderThesis() {
   const phases = $("#phases");
   if (!phases) return;
-
   phases.innerHTML = "";
 
   const grid = document.createElement("div");
   grid.className = "card-grid";
   phases.appendChild(grid);
 
-  for (let i = 0; i < thesisPhases.length; i++) {
-    const p = thesisPhases[i];
-
+  thesisPhases.forEach((p, i) => {
     const card = document.createElement("article");
     card.className = `card ${i % 2 === 0 ? "" : "card--tilt2"}`;
 
-    const title = state.lang === "en" ? p.title_en : p.title_es;
-    const desc = state.lang === "en" ? p.desc_en : p.desc_es;
-
     card.innerHTML = `
       <p class="card-title">
-        <strong>${title}</strong>
-        <small>${p.phase}</small>
+        <strong>${p.title[state.lang] || p.title.en}</strong>
+        <small>${p.phase[state.lang] || p.phase.en}</small>
       </p>
-      <div class="badge" style="margin-bottom:10px;">${p.group} • ${p.badge}</div>
-      <p style="margin:0;color:var(--muted)">${desc}</p>
+      <div class="badge" style="margin-bottom:10px;">${p.group[state.lang] || p.group.en}</div>
+      <p style="margin:0;color:var(--muted)">${p.desc[state.lang] || p.desc.en}</p>
     `;
 
     grid.appendChild(card);
-  }
+  });
 }
 
 function vimeoEmbedFromUrl(url) {
-  // Accepts vimeo.com/<id> form, returns player URL
   try {
     const u = new URL(url);
     const parts = u.pathname.split("/").filter(Boolean);
@@ -475,105 +429,46 @@ function renderReel() {
 
   const wrapper = document.createElement("div");
   wrapper.className = "media";
+  wrapper.innerHTML = embed
+    ? `<iframe src="${embed}" title="Animation Reel" allow="autoplay; fullscreen; picture-in-picture" loading="lazy"></iframe>`
+    : `<div class="card"><p style="margin:0;color:var(--muted)">Reel link is missing or invalid.</p></div>`;
 
-  if (!embed) {
-    wrapper.innerHTML = `<div class="card"><p style="margin:0;color:var(--muted)">Reel link is missing or invalid.</p></div>`;
-    reel.appendChild(wrapper);
-    return;
-  }
-
-  wrapper.innerHTML = `
-    <iframe
-      src="${embed}"
-      title="Animation Reel"
-      allow="autoplay; fullscreen; picture-in-picture"
-      loading="lazy"
-    ></iframe>
-  `;
   reel.appendChild(wrapper);
 }
 
-function renderAnimationTabs() {
-  const container = $("#galleries");
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  const t = i18n[state.lang];
-
-  const tabs = document.createElement("div");
-  tabs.className = "tabs";
-  tabs.setAttribute("role", "tablist");
-  tabs.innerHTML = `
-    <button class="tab" role="tab" id="tab-stepped" aria-selected="false" data-tab="stepped">${t.tabsStepped}</button>
-    <button class="tab" role="tab" id="tab-spline" aria-selected="false" data-tab="spline">${t.tabsSpline}</button>
-    <button class="tab" role="tab" id="tab-polish" aria-selected="false" data-tab="polish">${t.tabsPolish}</button>
-  `;
-  container.appendChild(tabs);
-
-  const grid = document.createElement("div");
-  grid.className = "card-grid";
-  grid.id = "animation-grid";
-  container.appendChild(grid);
-
-  setAnimationTab(state.animationTab);
-
-  tabs.addEventListener("click", (e) => {
-    const btn = e.target.closest("button[data-tab]");
-    if (!btn) return;
-    setAnimationTab(btn.dataset.tab);
-  });
-}
-
-function setAnimationTab(tab) {
-  if (!["stepped", "spline", "polish"].includes(tab)) tab = "stepped";
-  state.animationTab = tab;
-
-  // aria-selected updates
-  $("#tab-stepped")?.setAttribute("aria-selected", tab === "stepped" ? "true" : "false");
-  $("#tab-spline")?.setAttribute("aria-selected", tab === "spline" ? "true" : "false");
-  $("#tab-polish")?.setAttribute("aria-selected", tab === "polish" ? "true" : "false");
-
-  const grid = $("#animation-grid");
-  if (!grid) return;
-  grid.innerHTML = "";
-
-  const items = animationGalleries[tab] || [];
-  if (!items.length) {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `<p style="margin:0;color:var(--muted)">Add your ${tab} items in <code>app.js</code> (animationGalleries).</p>`;
-    grid.appendChild(card);
-    return;
-  }
-
-  for (const it of items) {
-    const card = document.createElement("article");
-    card.className = "card";
-    card.innerHTML = `
-      <p class="card-title">
-        <strong>${it.title}</strong>
-        <small>${tab}</small>
-      </p>
-      <p style="margin:0;color:var(--muted)">${it.type || ""}</p>
-    `;
-    grid.appendChild(card);
-  }
-}
-
-function renderContactSocial() {
-  // Add social buttons under contact section
+function ensureContactExtras() {
   const contact = $("#contact");
   if (!contact) return;
 
-  let row = $("#social-row");
-  if (!row) {
-    row = document.createElement("div");
+  // Social row
+  if (!$("#social-row")) {
+    const row = document.createElement("div");
     row.id = "social-row";
     row.className = "social-row";
     contact.appendChild(row);
   }
 
+  // Mailto button
+  if (!$("#mailto-btn")) {
+    const mail = document.createElement("a");
+    mail.id = "mailto-btn";
+    mail.className = "btn";
+    mail.style.marginTop = "12px";
+    contact.appendChild(mail);
+  }
+}
+
+function renderContact() {
+  ensureContactExtras();
+
+  const row = $("#social-row");
+  const mail = $("#mailto-btn");
+  if (!row || !mail) return;
+
+  mail.href = `mailto:${CONTENT.contact.email}`;
+  mail.textContent = CONTENT.contact.email;
+
+  // Simple icon svgs
   const icons = {
     instagram: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.5A5.5 5.5 0 1 1 6.5 14 5.5 5.5 0 0 1 12 8.5zm0 2A3.5 3.5 0 1 0 15.5 14 3.5 3.5 0 0 0 12 10.5zM18 7a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/></svg>`,
     artstation: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.23 3.2a.9.9 0 0 0-.8-.5H8.7l7.15 12.4a.9.9 0 0 0 .78.45h4.73a.9.9 0 0 0 .78-1.35l-7.92-10.95zM6.3 4.6a.9.9 0 0 0-.78 1.35l.78 1.35h4.9L8.7 3.2H6.3zm2.1 15.2a.9.9 0 0 0 .78.45h4.73l-1.17-2.03H7.3l1.1 1.58zM2.64 14.8a.9.9 0 0 0 .78 1.35h12.06l-1.17-2.03H3.42l-.78.68z"/></svg>`,
@@ -599,25 +494,132 @@ function renderContactSocial() {
     a.innerHTML = icons[l.key] || l.key;
     row.appendChild(a);
   }
+}
 
-  // Add mailto helper button (optional)
-  let mail = $("#mailto-btn");
-  if (!mail) {
-    mail = document.createElement("a");
-    mail.id = "mailto-btn";
-    mail.className = "btn";
-    mail.style.marginTop = "12px";
-    contact.appendChild(mail);
+/* ---------- Modals (skeleton + ESC close) ---------- */
+function openModal({ title, subtabs }) {
+  const root = $("#modal-root");
+  if (!root) return;
+
+  const t = i18n[state.lang];
+
+  root.classList.add("is-open");
+  root.setAttribute("aria-hidden", "false");
+
+  const backdrop = document.createElement("div");
+  backdrop.className = "modal-backdrop";
+
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+
+  const header = document.createElement("div");
+  header.className = "modal-header";
+  header.innerHTML = `
+    <h3 class="modal-title">${title}</h3>
+    <button class="modal-close" type="button" aria-label="Close">✕</button>
+  `;
+
+  const body = document.createElement("div");
+  body.className = "modal-body";
+
+  const tabs = document.createElement("div");
+  tabs.className = "modal-subtabs";
+  tabs.innerHTML = subtabs
+    .map((st, i) => `<button class="tab" type="button" aria-selected="${i === 0}" data-k="${st.key}">${st.label}</button>`)
+    .join("");
+
+  const content = document.createElement("div");
+  content.id = "modal-content";
+  content.className = "card";
+  content.innerHTML = `<p style="margin:0;color:var(--muted)">${t.modalPlaceholder}</p>`;
+
+  body.appendChild(tabs);
+  body.appendChild(content);
+
+  modal.appendChild(header);
+  modal.appendChild(body);
+
+  root.innerHTML = "";
+  root.appendChild(backdrop);
+  root.appendChild(modal);
+
+  function close() {
+    root.classList.remove("is-open");
+    root.setAttribute("aria-hidden", "true");
+    root.innerHTML = "";
+    document.removeEventListener("keydown", onKey);
   }
-  mail.href = `mailto:${CONTENT.contact.email}`;
-  mail.textContent = CONTENT.contact.email;
+
+  function onKey(e) {
+    if (e.key === "Escape") close();
+  }
+
+  backdrop.addEventListener("click", close);
+  header.querySelector(".modal-close")?.addEventListener("click", close);
+  document.addEventListener("keydown", onKey);
+
+  tabs.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-k]");
+    if (!btn) return;
+    tabs.querySelectorAll("button[data-k]").forEach((b) => b.setAttribute("aria-selected", b === btn));
+    content.innerHTML = `<p style="margin:0;color:var(--muted)">${t.modalPlaceholder}</p>`;
+  });
+}
+
+function renderVisDev() {
+  const section = $("#visual-development");
+  if (!section) return;
+
+  // Create buttons if not present
+  let wrap = section.querySelector("#visdev-actions");
+  if (!wrap) {
+    wrap = document.createElement("div");
+    wrap.id = "visdev-actions";
+    wrap.className = "hero-actions";
+    section.appendChild(wrap);
+  }
+
+  const t = i18n[state.lang];
+  wrap.innerHTML = `
+    <button class="btn" type="button" id="open-pet">${t.modalPet}</button>
+    <button class="btn btn--ghost" type="button" id="open-merce">${t.modalMerce}</button>
+  `;
+
+  $("#open-pet")?.addEventListener("click", () => {
+    openModal({
+      title: t.modalPet,
+      subtabs: [
+        { key: "brief", label: t.modalSubBrief },
+        { key: "chars", label: t.modalSubCharacters },
+        { key: "props", label: t.modalSubProps },
+        { key: "env", label: t.modalSubEnv },
+      ],
+    });
+  });
+
+  $("#open-merce")?.addEventListener("click", () => {
+    openModal({
+      title: t.modalMerce,
+      subtabs: [
+        { key: "inspo", label: t.modalSubInspo },
+        { key: "char", label: t.modalSubChar },
+        { key: "env", label: t.modalSubEnv2 },
+        { key: "props", label: t.modalSubProps2 },
+        { key: "final", label: t.modalSubFinal },
+      ],
+    });
+  });
 }
 
 function wireEvents() {
+  $("#fab-theme")?.addEventListener("click", toggleTheme);
+  $("#fab-lang")?.addEventListener("click", toggleLang);
+
   $("#theme-toggle")?.addEventListener("click", toggleTheme);
   $("#lang-toggle")?.addEventListener("click", toggleLang);
 
-  // Contact form submit
   $("#contact-form")?.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = ($("#name")?.value || "").trim();
@@ -636,10 +638,19 @@ function wireEvents() {
   });
 }
 
+function renderAll() {
+  renderI18n();
+  renderTimeline();
+  renderThesis();
+  renderReel();
+  renderContact();
+  renderVisDev();
+}
+
 function init() {
   loadPrefs();
   applyTheme();
-  setLang(state.lang); // triggers rendering
+  renderAll();
   wireEvents();
 }
 

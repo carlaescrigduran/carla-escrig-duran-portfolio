@@ -81,9 +81,9 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
-  backdrop-filter: blur(10px);
-  background: color-mix(in srgb, var(--bg) 78%, transparent);
-  border-bottom: 1px solid var(--card-border);
+  backdrop-filter: none;
+  background: #efefef;
+  border-bottom: 1px solid #dddddd;
 }
 
 nav {
@@ -527,51 +527,6 @@ textarea:focus-visible {
   color: #3d4052;
 }
 
-.about-page header {
-  backdrop-filter: none;
-  background: #efefef;
-  border-bottom: 1px solid #dddddd;
-}
-
-.about-page nav {
-  max-width: 1600px;
-}
-
-.about-page .brand h1 {
-  font-family: "Katibeh", serif;
-  font-size: 34px;
-  line-height: 1;
-  background: linear-gradient(90deg, #ee8a86, #69c8cf, #ead45e);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.about-page .brand small {
-  display: none;
-}
-
-.about-page .menu-links {
-  gap: 24px;
-}
-
-.about-page .menu-links a {
-  position: static;
-}
-
-.about-page .menu-links a:hover {
-  color: var(--text);
-}
-
-.about-page .menu-links li:first-child a::after,
-.about-page .menu-links li:nth-child(2) a::after {
-  content: none;
-}
-
-.about-page .nav-actions {
-  display: none;
-}
-
 .about-page main {
   max-width: 1200px;
   padding-top: 84px;
@@ -725,16 +680,6 @@ textarea:focus-visible {
   .card-grid { grid-template-columns: 1fr; }
   .fab { width: 48px; height: 48px; }
   .social-btn { width: 54px; height: 54px; }
-
-  .about-page nav {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .about-page .menu-links {
-    justify-content: flex-start;
-    gap: 18px;
-  }
 
   .about-page #about h2 {
     font-size: 56px;

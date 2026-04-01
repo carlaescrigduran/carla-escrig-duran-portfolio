@@ -57,6 +57,7 @@ const i18n = {
     ctaReel: "Watch reel",
     heroLocation: "Barcelona, Spain",
     homeWelcome: "Welcome to my portfolio!",
+    skipToContent: "Skip to content",
     aboutIntro:
       "Passionate about animation since my childhood and dreaming of working in it one day. I am becoming a professional 3D animator and Visual Development artist. I am a hardworking person and I give my 100% to any project I work on.",
     personalIntro: "My creative explorations.",
@@ -68,6 +69,14 @@ const i18n = {
     navStoryboard: "STORYBOARD",
     navPersonal: "PERSONAL WORK",
     navContact: "CONTACT",
+    pageTitleHome: "Carla Escrig Durán - Portfolio",
+    pageTitleAbout: "About Me - Carla Escrig Duran",
+    pageTitleThesis: "Thesis - Carla Escrig Duran",
+    pageTitleAnimation: "Animation - Carla Escrig Duran",
+    pageTitleVisdev: "Visual Development - Carla Escrig Duran",
+    pageTitleStoryboard: "Storyboard - Carla Escrig Duran",
+    pageTitlePersonal: "Personal Work - Carla Escrig Duran",
+    pageTitleContact: "Contact - Carla Escrig Duran",
 
     tabsStepped: "Stepped",
     tabsSpline: "Spline",
@@ -98,11 +107,12 @@ const i18n = {
     reelTitle: "Animation Reel",
     reelInvalid: "Reel link is missing or invalid.",
     langToggleAria: "Switch to Spanish",
+    closeLabel: "Close",
   },
 
   es: {
     navTitle: "Portafolio",
-    brandSubtitle: "Animación 3D y Visual Development",
+    brandSubtitle: "Animadora 3D y artista de desarrollo visual",
     homeTitle: "INICIO",
     aboutTitle: "SOBRE MÍ",
     thesisTitle: "TESIS",
@@ -117,8 +127,9 @@ const i18n = {
     ctaReel: "Ver reel",
     heroLocation: "Barcelona, España",
     homeWelcome: "¡Bienvenida/o a mi portafolio!",
+    skipToContent: "Saltar al contenido",
     aboutIntro:
-      "Apasionada por la animación desde la infancia y soñando con trabajar en este sector. Me estoy formando como profesional en animación 3D y Visual Development. Soy una persona trabajadora y doy el 100% en cada proyecto en el que participo.",
+      "Apasionada por la animación desde la infancia y soñando con trabajar en este sector. Me estoy formando como profesional en animación 3D y desarrollo visual. Soy una persona trabajadora y doy el 100% en cada proyecto en el que participo.",
     personalIntro: "Mis exploraciones creativas.",
     navHome: "INICIO",
     navAbout: "SOBRE MÍ",
@@ -128,17 +139,25 @@ const i18n = {
     navStoryboard: "STORYBOARD",
     navPersonal: "TRABAJO PERSONAL",
     navContact: "CONTACTO",
+    pageTitleHome: "Carla Escrig Durán - Portafolio",
+    pageTitleAbout: "Sobre Mi - Carla Escrig Duran",
+    pageTitleThesis: "Tesis - Carla Escrig Duran",
+    pageTitleAnimation: "Animacion - Carla Escrig Duran",
+    pageTitleVisdev: "Desarrollo Visual - Carla Escrig Duran",
+    pageTitleStoryboard: "Storyboard - Carla Escrig Duran",
+    pageTitlePersonal: "Trabajo Personal - Carla Escrig Duran",
+    pageTitleContact: "Contacto - Carla Escrig Duran",
 
-    tabsStepped: "Stepped",
+    tabsStepped: "Bloqueo",
     tabsSpline: "Spline",
-    tabsPolish: "Polish",
+    tabsPolish: "Pulido",
 
     thesisProjectName: "KAIROS",
     thesisProjectIntro:
       "Mi proyecto de tesis fue un viaje colaborativo a través de todo el pipeline de animación. Desde los primeros bocetos conceptuales hasta el compositing final, contribuí en múltiples departamentos para dar vida a nuestra historia. Aquí puedes explorar mi trabajo organizado por fases de producción.",
 
     contactName: "Nombre:",
-    contactEmail: "Email:",
+    contactEmail: "Correo electrónico:",
     contactMessage: "Mensaje:",
     contactSend: "Enviar",
     formSuccess: (name) => `¡Gracias, ${name}! Tu mensaje se ha enviado.`,
@@ -157,7 +176,8 @@ const i18n = {
     modalSubFinal: "Ilustraciones finales",
     reelTitle: "Reel de animación",
     reelInvalid: "Falta el enlace del reel o no es válido.",
-    langToggleAria: "Switch to English",
+    langToggleAria: "Cambiar a ingles",
+    closeLabel: "Cerrar",
   },
 };
 
@@ -231,16 +251,16 @@ const thesisPhases = [
   {
     group: { en: "PRE-PRODUCTION", es: "PREPRODUCCIÓN" },
     phase: { en: "PHASE 1", es: "FASE 1" },
-    title: { en: "Concept Art", es: "Concept Art" },
+    title: { en: "Concept Art", es: "Arte conceptual" },
     desc: {
       en: "Character designs, environment concepts, and visual development exploring the look and feel of our story world.",
-      es: "Diseño de personajes, conceptos de entorno y desarrollo visual para definir el look & feel del mundo.",
+      es: "Diseño de personajes, conceptos de entorno y desarrollo visual para definir el estilo visual del mundo.",
     },
   },
   {
     group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
     phase: { en: "PHASE 3", es: "FASE 3" },
-    title: { en: "Animatic", es: "Animatic" },
+    title: { en: "Animatic", es: "Animática" },
     desc: {
       en: "Bringing the storyboard to life with timing, pacing, and rough audio to establish the rhythm of our film.",
       es: "Dando vida al storyboard con timing, ritmo y audio provisional para definir la estructura del corto.",
@@ -249,7 +269,7 @@ const thesisPhases = [
   {
     group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
     phase: { en: "PHASE 4", es: "FASE 4" },
-    title: { en: "Layout", es: "Layout" },
+    title: { en: "Layout", es: "Composición" },
     desc: {
       en: "3D scene composition and camera work - establishing the staging and cinematography for each shot.",
       es: "Composición 3D y cámaras: planteamiento y cinematografía por plano.",
@@ -341,6 +361,26 @@ function ensureHero() {
 function renderI18n() {
   const t = i18n[state.lang];
   document.documentElement.lang = state.lang;
+
+  const pageTitles = {
+    "index.html": t.pageTitleHome,
+    "about.html": t.pageTitleAbout,
+    "thesis.html": t.pageTitleThesis,
+    "animation.html": t.pageTitleAnimation,
+    "visual-development.html": t.pageTitleVisdev,
+    "storyboard.html": t.pageTitleStoryboard,
+    "personal-work.html": t.pageTitlePersonal,
+    "contact.html": t.pageTitleContact,
+  };
+  const pageFile = window.location.pathname.split("/").pop() || "index.html";
+  if (pageTitles[pageFile]) {
+    document.title = pageTitles[pageFile];
+  }
+
+  const skipLink = $(".skip-link");
+  if (skipLink) {
+    skipLink.textContent = t.skipToContent;
+  }
 
   // top nav (if present)
   const navH1 = $("nav h1");
@@ -598,7 +638,7 @@ function openModal({ title, subtabs }) {
   header.className = "modal-header";
   header.innerHTML = `
     <h3 class="modal-title">${title}</h3>
-    <button class="modal-close" type="button" aria-label="Close">✕</button>
+    <button class="modal-close" type="button" aria-label="${t.closeLabel}">✕</button>
   `;
 
   const body = document.createElement("div");

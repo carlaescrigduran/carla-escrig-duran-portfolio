@@ -297,8 +297,8 @@ function ensureHero() {
       <h3 class="hero-name" id="hero-name"></h3>
       <p class="hero-subtitle" id="hero-subtitle"></p>
       <div class="hero-actions">
-        <a class="btn" href="#contact" id="cta-contact"></a>
-        <a class="btn btn--ghost" href="#animation" id="cta-reel"></a>
+        <a class="btn" href="contact.html" id="cta-contact"></a>
+        <a class="btn btn--ghost" href="animation.html" id="cta-reel"></a>
         <div class="hero-chip"><span>Barcelona, Spain</span></div>
       </div>
     `;
@@ -350,36 +350,53 @@ function renderTimeline() {
   const container = $("#timeline");
   if (!container) return;
 
-  container.classList.add("timeline");
+  container.classList.add("timeline", "about-timeline");
   container.innerHTML = "";
 
   timelineData.forEach((item, idx) => {
-    const card = document.createElement("div");
-    card.className = `timeline-item ${idx % 2 === 0 ? "is-left" : "is-right"}`;
-    card.style.setProperty("--dot", yearColors[item.year] || "var(--grad-mint)");
+    const row = document.createElement("article");
+    row.className = `timeline-row ${idx % 2 === 0 ? "is-left" : "is-right"}`;
+    row.style.setProperty("--dot", yearColors[item.year] || "var(--grad-mint)");
 
     const title = item.title[state.lang] || item.title.en;
     const text = item.text[state.lang] || item.text.en;
 
-    card.innerHTML = `
-      <p class="timeline-year">${item.year}</p>
-      <p style="margin:0 0 6px;font-weight:600">${title}</p>
-      <p class="timeline-text">${text}</p>
+    row.innerHTML = `
+      <div class="timeline-card">
+        <h3>${title}</h3>
+        <p class="timeline-text">${text}</p>
+      </div>
+      <div class="timeline-year-pill">${item.year}</div>
+      <div class="timeline-media">
+        <div class="timeline-media-inner">
+          ${idx === 0 ? "<span>Barcelona</span>" : ""}
+        </div>
+      </div>
     `;
 
     if (item.media) {
-      const media = document.createElement("div");
-      media.className = "timeline-media";
-      if (item.media.type === "img") {
-        media.innerHTML = `<img loading="lazy" src="${item.media.src}" alt="${item.media.alt || title}">`;
-      } else if (item.media.type === "video") {
-        media.innerHTML = `<iframe loading="lazy" src="${item.media.src}" title="${title}" allow="autoplay; fullscreen; picture-in-picture"></iframe>`;
+      const mediaInner = row.querySelector(".timeline-media-inner");
+      if (mediaInner && item.media.type === "img") {
+        mediaInner.innerHTML = `<img loading="lazy" src="${item.media.src}" alt="${item.media.alt || title}">`;
+      } else if (mediaInner && item.media.type === "video") {
+        mediaInner.innerHTML = `<iframe loading="lazy" src="${item.media.src}" title="${title}" allow="autoplay; fullscreen; picture-in-picture"></iframe>`;
       }
-      card.appendChild(media);
     }
 
-    container.appendChild(card);
+    container.appendChild(row);
   });
+}
+
+function ensureFloatingControls() {
+  if ($(".floating-controls")) return;
+
+  const controls = document.createElement("div");
+  controls.className = "floating-controls";
+  controls.innerHTML = `
+    <button class="fab" id="fab-lang" type="button" aria-label="Toggle language">EN</button>
+    <button class="fab" id="fab-theme" type="button" aria-label="Toggle theme">☀️</button>
+  `;
+  document.body.appendChild(controls);
 }
 
 function renderThesis() {
@@ -648,6 +665,7 @@ function renderAll() {
 }
 
 function init() {
+  ensureFloatingControls();
   loadPrefs();
   applyTheme();
   renderAll();

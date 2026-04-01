@@ -557,7 +557,7 @@ textarea:focus-visible {
 .about-page #about h2 {
   margin: 0;
   text-align: center;
-  font-size: clamp(52px, 8vw, 74px);
+  font-size: clamp(42px, 6.5vw, 60px);
   font-family: "Katibeh", serif;
   color: #5fbfb9;
   letter-spacing: 0.03em;
@@ -566,17 +566,17 @@ textarea:focus-visible {
 
 .about-intro {
   max-width: 900px;
-  margin: 26px auto 56px;
+  margin: 20px auto 42px;
   text-align: center;
   color: #4a5568;
-  font-size: 34px;
-  line-height: 1.45;
+  font-size: 28px;
+  line-height: 1.4;
 }
 
 .about-timeline {
   position: relative;
   display: grid;
-  gap: 56px;
+  gap: 38px;
   margin-top: 22px;
   padding: 0 18px 40px;
 }
@@ -605,13 +605,13 @@ textarea:focus-visible {
   background: #f8f8f5;
   border: 2px solid #dcdad3;
   border-radius: 24px;
-  padding: 26px 28px;
+  padding: 20px 22px;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04);
 }
 
 .timeline-card h3 {
   margin: 0 0 14px;
-  font-size: 44px;
+  font-size: 36px;
   line-height: 1;
   color: #111827;
   font-family: "Katibeh", serif;
@@ -620,23 +620,23 @@ textarea:focus-visible {
 
 .timeline-text {
   margin: 0;
-  font-size: 31px;
-  line-height: 1.45;
+  font-size: 24px;
+  line-height: 1.4;
   color: #4a5568;
 }
 
 .timeline-year-pill {
   z-index: 2;
-  min-width: 114px;
+  min-width: 96px;
   text-align: center;
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: 999px;
   border: 4px solid #ffffff;
   background: linear-gradient(135deg, #f2707f, #f05b75);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   color: #fff;
   font-family: "Katibeh", serif;
-  font-size: 44px;
+  font-size: 36px;
   line-height: 1;
 }
 
@@ -704,11 +704,11 @@ textarea:focus-visible {
   .social-btn { width: 54px; height: 54px; }
 
   .about-page #about h2 {
-    font-size: 56px;
+    font-size: 48px;
   }
 
   .about-intro {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .timeline-row {
@@ -723,8 +723,8 @@ textarea:focus-visible {
   .timeline-year-pill {
     justify-self: start;
     margin-left: 42px;
-    min-width: 95px;
-    font-size: 38px;
+    min-width: 86px;
+    font-size: 32px;
   }
 
   .timeline-row.is-right .timeline-card,

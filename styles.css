@@ -88,10 +88,10 @@ header {
 
 nav {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   align-items: center;
   gap: 12px;
-  max-width: 1100px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 14px 16px;
 }
@@ -107,29 +107,34 @@ nav {
   font-weight: 400;
   font-size: 34px;
   letter-spacing: 0.2px;
+  line-height: 1;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ee8a86, #69c8cf, #ead45e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .brand small {
-  color: var(--muted);
-  font-weight: 300;
+  display: none;
 }
 
 .menu-links {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: 24px;
   list-style: none;
   margin: 0;
-  padding: 6px;
+  padding: 0;
   flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
-  border: 1px solid var(--card-border);
-  border-radius: 999px;
-  background: var(--card-strong);
-  box-shadow: var(--shadow-sm);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .menu-links li {
@@ -138,11 +143,11 @@ nav {
 
 .menu-links a {
   display: inline-block;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--card-border);
+  padding: 0;
+  border-radius: 0;
+  border: 0;
   color: var(--text);
-  background: color-mix(in srgb, var(--bg) 86%, #a8e6cf 14%);
+  background: transparent;
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
@@ -152,9 +157,8 @@ nav {
 
 .menu-links a:hover {
   color: var(--text);
-  border-color: color-mix(in srgb, var(--card-border) 55%, #667eea 45%);
-  background: color-mix(in srgb, var(--bg) 68%, #ffe66d 32%);
-  transform: translateY(-2px);
+  background: transparent;
+  transform: none;
 }
 
 .menu-links a:focus-visible {
@@ -163,9 +167,7 @@ nav {
 }
 
 .nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: none;
 }
 
 .btn {
@@ -550,46 +552,20 @@ textarea:focus-visible {
 }
 
 .about-page .menu-links {
-  justify-content: flex-end;
-  gap: 28px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  background: transparent;
-  padding: 0;
+  gap: 24px;
 }
 
 .about-page .menu-links a {
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  padding: 0;
-  font-size: 22px;
-  font-family: "Katibeh", serif;
-  letter-spacing: 0.03em;
-  color: #1f2937;
-  position: relative;
+  position: static;
 }
 
 .about-page .menu-links a:hover {
-  transform: none;
-  color: #111827;
+  color: var(--text);
 }
 
 .about-page .menu-links li:first-child a::after,
 .about-page .menu-links li:nth-child(2) a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #ee8a86, #69c8cf, #ead45e);
+  content: none;
 }
 
 .about-page .nav-actions {
@@ -724,7 +700,7 @@ textarea:focus-visible {
 @media (max-width: 768px) {
   nav {
     padding: 12px 14px;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr;
   }
 
   .brand {
@@ -742,11 +718,6 @@ textarea:focus-visible {
 
   .menu-links a {
     white-space: nowrap;
-  }
-
-  .nav-actions {
-    grid-column: 2;
-    justify-self: end;
   }
 
   .brand h1 { font-size: 30px; }

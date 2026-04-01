@@ -55,6 +55,19 @@ const i18n = {
 
     ctaContact: "Contact",
     ctaReel: "Watch reel",
+    heroLocation: "Barcelona, Spain",
+    homeWelcome: "Welcome to my portfolio!",
+    aboutIntro:
+      "Passionate about animation since my childhood and dreaming of working in it one day. I am becoming a professional 3D animator and Visual Development artist. I am a hardworking person and I give my 100% to any project I work on.",
+    personalIntro: "My creative explorations.",
+    navHome: "HOME",
+    navAbout: "ABOUT ME",
+    navThesis: "THESIS WORK",
+    navAnimation: "3D ANIMATION",
+    navVisdev: "VISUAL DEVELOPMENT",
+    navStoryboard: "STORYBOARD",
+    navPersonal: "PERSONAL WORK",
+    navContact: "CONTACT",
 
     tabsStepped: "Stepped",
     tabsSpline: "Spline",
@@ -82,6 +95,9 @@ const i18n = {
     modalSubEnv2: "Environment Design",
     modalSubProps2: "Props & Details",
     modalSubFinal: "Final Illustrations",
+    reelTitle: "Animation Reel",
+    reelInvalid: "Reel link is missing or invalid.",
+    langToggleAria: "Switch to Spanish",
   },
 
   es: {
@@ -99,6 +115,19 @@ const i18n = {
 
     ctaContact: "Contacto",
     ctaReel: "Ver reel",
+    heroLocation: "Barcelona, España",
+    homeWelcome: "¡Bienvenida/o a mi portafolio!",
+    aboutIntro:
+      "Apasionada por la animación desde la infancia y soñando con trabajar en este sector. Me estoy formando como profesional en animación 3D y Visual Development. Soy una persona trabajadora y doy el 100% en cada proyecto en el que participo.",
+    personalIntro: "Mis exploraciones creativas.",
+    navHome: "INICIO",
+    navAbout: "SOBRE MÍ",
+    navThesis: "TESIS",
+    navAnimation: "ANIMACIÓN 3D",
+    navVisdev: "DESARROLLO VISUAL",
+    navStoryboard: "STORYBOARD",
+    navPersonal: "TRABAJO PERSONAL",
+    navContact: "CONTACTO",
 
     tabsStepped: "Stepped",
     tabsSpline: "Spline",
@@ -126,6 +155,9 @@ const i18n = {
     modalSubEnv2: "Diseño de entorno",
     modalSubProps2: "Props y detalles",
     modalSubFinal: "Ilustraciones finales",
+    reelTitle: "Reel de animación",
+    reelInvalid: "Falta el enlace del reel o no es válido.",
+    langToggleAria: "Switch to English",
   },
 };
 
@@ -308,6 +340,7 @@ function ensureHero() {
 
 function renderI18n() {
   const t = i18n[state.lang];
+  document.documentElement.lang = state.lang;
 
   // top nav (if present)
   const navH1 = $("nav h1");
@@ -315,15 +348,36 @@ function renderI18n() {
   const brandSmall = $("nav small");
   if (brandSmall) brandSmall.textContent = t.brandSubtitle;
 
+  const navMap = {
+    "index.html": t.navHome,
+    "about.html": t.navAbout,
+    "thesis.html": t.navThesis,
+    "animation.html": t.navAnimation,
+    "visual-development.html": t.navVisdev,
+    "storyboard.html": t.navStoryboard,
+    "personal-work.html": t.navPersonal,
+    "contact.html": t.navContact,
+  };
+
+  document.querySelectorAll(".menu-links a[href]").forEach((link) => {
+    const href = link.getAttribute("href");
+    if (href && navMap[href]) {
+      link.textContent = navMap[href];
+    }
+  });
+
   // section headers
   $("#home h2") && ($("#home h2").textContent = t.homeTitle);
+  $("#home p") && ($("#home p").textContent = t.homeWelcome);
   $("#about h2") && ($("#about h2").textContent = t.aboutTitle);
+  $(".about-intro") && ($(".about-intro").textContent = t.aboutIntro);
   $("#thesis h2") && ($("#thesis h2").textContent = t.thesisTitle);
   $("#animation h2") && ($("#animation h2").textContent = t.animationTitle);
   $("#visual-development h2") && ($("#visual-development h2").textContent = t.visdevTitle);
   $("#storyboard h2") && ($("#storyboard h2").textContent = t.storyboardTitle);
   $("#storyboard p") && ($("#storyboard p").textContent = t.storyboardSoon);
   $("#personal-work h2") && ($("#personal-work h2").textContent = t.personalTitle);
+  $("#personal-work p") && ($("#personal-work p").textContent = t.personalIntro);
   $("#contact h2") && ($("#contact h2").textContent = t.contactTitle);
 
   // hero
@@ -332,9 +386,17 @@ function renderI18n() {
   $("#hero-subtitle") && ($("#hero-subtitle").textContent = CONTENT.subtitle[state.lang] || CONTENT.subtitle.en);
   $("#cta-contact") && ($("#cta-contact").textContent = t.ctaContact);
   $("#cta-reel") && ($("#cta-reel").textContent = t.ctaReel);
+  $(".hero-chip span") && ($(".hero-chip span").textContent = t.heroLocation);
 
-  // FAB lang icon stays 🌐
-  $("#fab-lang") && ($("#fab-lang").textContent = "🌐");
+  const langFab = $("#fab-lang");
+  if (langFab) {
+    const targetLang = state.lang === "en" ? "ES" : "EN";
+    const hoverEmoji = state.lang === "en" ? "🇪🇸" : "🇬🇧";
+    langFab.textContent = targetLang;
+    langFab.dataset.emoji = hoverEmoji;
+    langFab.setAttribute("aria-label", t.langToggleAria);
+    langFab.title = `${targetLang} ${hoverEmoji}`;
+  }
 
   // contact labels
   $("label[for='name']") && ($("label[for='name']").textContent = t.contactName);
@@ -440,6 +502,7 @@ function vimeoEmbedFromUrl(url) {
 function renderReel() {
   const reel = $("#reel");
   if (!reel) return;
+  const t = i18n[state.lang];
 
   const embed = vimeoEmbedFromUrl(CONTENT.reelVimeoUrl);
   reel.innerHTML = "";
@@ -447,8 +510,8 @@ function renderReel() {
   const wrapper = document.createElement("div");
   wrapper.className = "media";
   wrapper.innerHTML = embed
-    ? `<iframe src="${embed}" title="Animation Reel" allow="autoplay; fullscreen; picture-in-picture" loading="lazy"></iframe>`
-    : `<div class="card"><p style="margin:0;color:var(--muted)">Reel link is missing or invalid.</p></div>`;
+    ? `<iframe src="${embed}" title="${t.reelTitle}" allow="autoplay; fullscreen; picture-in-picture" loading="lazy"></iframe>`
+    : `<div class="card"><p style="margin:0;color:var(--muted)">${t.reelInvalid}</p></div>`;
 
   reel.appendChild(wrapper);
 }

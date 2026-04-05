@@ -82,8 +82,8 @@ header {
   top: 0;
   z-index: 10;
   backdrop-filter: none;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--bg);
+  border-bottom: 1px solid var(--card-border);
 }
 
 nav {
@@ -583,8 +583,8 @@ textarea:focus-visible {
 }
 
 .about-page {
-  background: #ffffff;
-  color: #384152;
+  background: var(--bg);
+  color: var(--text);
   font-size: 70%;
 }
 
@@ -607,7 +607,7 @@ textarea:focus-visible {
   max-width: 760px;
   margin: 16px auto 34px;
   text-align: center;
-  color: #4a5568;
+  color: var(--muted);
   font-size: 22px;
   line-height: 1.35;
 }
@@ -641,18 +641,18 @@ textarea:focus-visible {
 }
 
 .timeline-card {
-  background: #f8f8f5;
-  border: 2px solid #dcdad3;
+  background: var(--card-strong);
+  border: 1px solid var(--card-border);
   border-radius: 20px;
   padding: 16px 18px;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-sm);
 }
 
 .timeline-card h3 {
   margin: 0 0 10px;
   font-size: 30px;
   line-height: 1;
-  color: #111827;
+  color: var(--text);
   font-family: "Katibeh", serif;
   font-weight: 400;
 }
@@ -661,7 +661,7 @@ textarea:focus-visible {
   margin: 0;
   font-size: 20px;
   line-height: 1.35;
-  color: #4a5568;
+  color: var(--muted);
 }
 
 .timeline-year-pill {
@@ -670,7 +670,7 @@ textarea:focus-visible {
   text-align: center;
   padding: 6px 12px;
   border-radius: 999px;
-  border: 3px solid #ffffff;
+  border: 3px solid var(--bg);
   background: linear-gradient(135deg, #f2707f, #f05b75);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   color: #fff;
@@ -689,12 +689,16 @@ textarea:focus-visible {
   height: 100%;
   min-height: 220px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #f1dd9f, #efb198);
+  background: color-mix(in srgb, var(--bg) 70%, #f1dd9f 30%);
   display: grid;
   place-items: start center;
   padding-top: 10px;
   color: #fff;
   font-weight: 600;
+}
+
+html[data-theme="dark"] .about-page #about h2 {
+  color: #8de1dc;
 }
 
 .timeline-media-inner img,

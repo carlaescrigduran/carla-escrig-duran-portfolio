@@ -40,6 +40,11 @@ body {
   height: 100%;
 }
 
+body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
@@ -139,7 +144,7 @@ nav {
   margin: 0;
   padding: 0;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
   white-space: nowrap;
   border: 0;

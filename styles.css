@@ -659,13 +659,15 @@ textarea:focus-visible {
 
 .timeline-row {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas: "card year media";
   gap: 18px;
   align-items: stretch;
   position: relative;
 }
 
 .timeline-card {
+  grid-area: card;
   background: var(--card-strong);
   border: 1px solid var(--card-border);
   border-radius: 20px;
@@ -693,6 +695,7 @@ textarea:focus-visible {
 }
 
 .timeline-year-pill {
+  grid-area: year;
   z-index: 2;
   width: 92px;
   height: 92px;
@@ -712,6 +715,7 @@ textarea:focus-visible {
 }
 
 .timeline-media {
+  grid-area: media;
   border-radius: 20px;
   overflow: hidden;
   height: var(--timeline-block-height);
@@ -814,12 +818,8 @@ html[data-theme="dark"] .timeline-visual {
   object-fit: cover;
 }
 
-.timeline-row.is-right .timeline-card {
-  grid-column: 3;
-}
-
-.timeline-row.is-right .timeline-media {
-  grid-column: 1;
+.timeline-row.is-right {
+  grid-template-areas: "media year card";
 }
 
 @media (max-width: 768px) {
@@ -861,6 +861,10 @@ html[data-theme="dark"] .timeline-visual {
 
   .timeline-row {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "year"
+      "card"
+      "media";
     gap: 12px;
   }
 
@@ -880,7 +884,7 @@ html[data-theme="dark"] .timeline-visual {
   .timeline-row.is-right .timeline-media,
   .timeline-card,
   .timeline-media {
-    grid-column: 1;
+    grid-area: auto;
   }
 
   .timeline-card {

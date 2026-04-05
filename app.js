@@ -473,10 +473,13 @@ function renderTimeline() {
     if (item.media) {
       const mediaInner = row.querySelector(".timeline-media-inner");
       if (mediaInner && item.media.type === "img") {
+        mediaInner.classList.add("has-asset");
         mediaInner.innerHTML = `<img loading="lazy" src="${item.media.src}" alt="${item.media.alt || title}">`;
       } else if (mediaInner && item.media.type === "video") {
+        mediaInner.classList.add("has-asset");
         mediaInner.innerHTML = `<iframe loading="lazy" src="${item.media.src}" title="${title}" allow="autoplay; fullscreen; picture-in-picture"></iframe>`;
       } else if (mediaInner && item.media.type === "video-file") {
+        mediaInner.classList.add("has-asset");
         mediaInner.innerHTML = `<video autoplay muted loop playsinline controls preload="metadata" aria-label="${title}"><source src="${item.media.src}" type="video/mp4"></video>`;
       }
     }

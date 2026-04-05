@@ -639,7 +639,7 @@ textarea:focus-visible {
 .about-timeline {
   position: relative;
   display: grid;
-  gap: 28px;
+  gap: 42px;
   margin-top: 16px;
   padding: 0 12px 28px;
   --timeline-block-height: 240px;

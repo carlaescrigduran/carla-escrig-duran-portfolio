@@ -572,9 +572,14 @@ function ensureContactExtras() {
   if (!$("#mailto-btn")) {
     const mail = document.createElement("a");
     mail.id = "mailto-btn";
-    mail.className = "btn";
-    mail.style.marginTop = "12px";
+    mail.className = "btn contact-email-link";
     contact.appendChild(mail);
+  }
+
+  const row = $("#social-row");
+  const mail = $("#mailto-btn");
+  if (row && mail && row.nextElementSibling !== mail) {
+    row.insertAdjacentElement("afterend", mail);
   }
 }
 

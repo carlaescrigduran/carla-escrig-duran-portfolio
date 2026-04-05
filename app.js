@@ -185,6 +185,8 @@ const timelineData = [
   {
     year: "2002",
     title: { en: "The Beginning", es: "El inicio" },
+    icon: "🌱",
+    visual: { en: "Birthplace: Barcelona", es: "Lugar de nacimiento: Barcelona" },
     text: {
       en: "I was born on the 24th of June in 2002, in Barcelona, Spain. I was a naturally curious child and was fascinated by art at a very young age.",
       es: "Nací el 24 de junio de 2002 en Barcelona, España. Desde muy pequeña fui curiosa y el arte me fascinó desde temprano.",
@@ -194,6 +196,8 @@ const timelineData = [
   {
     year: "2010",
     title: { en: "First Steps in Art", es: "Primeros pasos en el arte" },
+    icon: "🎨",
+    visual: { en: "Sketchbooks and painting", es: "Cuadernos y pintura" },
     text: {
       en: "I started exploring drawing and painting. Like all children, I was mesmerized by animated films, and I spent my days drawing princesses, dragons, mermaids, etc.",
       es: "Empecé a explorar el dibujo y la pintura. Como a cualquier niña, me encantaban las pelis de animación y pasaba el día dibujando princesas, dragones, sirenas, etc.",
@@ -203,6 +207,8 @@ const timelineData = [
   {
     year: "2015",
     title: { en: "Diving into Animation", es: "Sumergiéndome en la animación" },
+    icon: "🎬",
+    visual: { en: "Discovering animation industry", es: "Descubriendo la industria de animación" },
     text: {
       en: "As a teenager, my interests started to flourish. I began educating myself about the animation industry, and I knew I wanted to dedicate my life to it.",
       es: "En la adolescencia mis intereses empezaron a crecer. Empecé a aprender por mi cuenta sobre la industria de la animación y supe que quería dedicarme a ello.",
@@ -212,6 +218,8 @@ const timelineData = [
   {
     year: "2020",
     title: { en: "Professional Development", es: "Desarrollo profesional" },
+    icon: "🎓",
+    visual: { en: "University and teamwork", es: "Universidad y trabajo en equipo" },
     text: {
       en: "My first year of college. I completed the 3D Animation & VFX degree at LaSalle URL and met amazing colleagues and teachers.",
       es: "Mi primer año de universidad. Cursé el grado de Animación 3D y VFX en LaSalle URL y conocí a compañeras/os y profes increíbles.",
@@ -221,6 +229,8 @@ const timelineData = [
   {
     year: "2024",
     title: { en: "Thesis & Specialization", es: "Tesis y especialización" },
+    icon: "🧩",
+    visual: { en: "Multidisciplinary thesis production", es: "Producción de tesis multidisciplinar" },
     text: {
       en: "We started our thesis project. I collaborated on designs, backgrounds, props, storyboards, animatics, texturing, VFX and 3D animation.",
       es: "Empezamos el proyecto de tesis. Participé en diseño, fondos, props, storyboards, animatics, texturizado, VFX y animación 3D.",
@@ -230,6 +240,8 @@ const timelineData = [
   {
     year: "2026",
     title: { en: "Looking Forward", es: "Mirando al futuro" },
+    icon: "🚀",
+    visual: { en: "Master's degree and next step", es: "Máster y siguiente etapa profesional" },
     text: {
       en: "After completing a Master's in 3D Animation for Characters, I’m ready to start my journey in the animation industry.",
       es: "Tras completar un Máster en Animación 3D de personajes, estoy lista para empezar mi camino en la industria de la animación.",
@@ -438,6 +450,8 @@ function renderTimeline() {
 
     const title = item.title[state.lang] || item.title.en;
     const text = item.text[state.lang] || item.text.en;
+    const visual = (item.visual && (item.visual[state.lang] || item.visual.en)) || title;
+    const icon = item.icon || "✨";
 
     row.innerHTML = `
       <div class="timeline-card">
@@ -447,7 +461,11 @@ function renderTimeline() {
       <div class="timeline-year-pill">${item.year}</div>
       <div class="timeline-media">
         <div class="timeline-media-inner">
-          ${idx === 0 ? "<span>Barcelona</span>" : ""}
+          <div class="timeline-visual" role="img" aria-label="${visual}">
+            <span class="timeline-visual-icon">${icon}</span>
+            <strong>${title}</strong>
+            <small>${visual}</small>
+          </div>
         </div>
       </div>
     `;

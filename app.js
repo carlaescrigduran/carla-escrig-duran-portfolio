@@ -41,7 +41,7 @@ const CONTENT = {
 
 const i18n = {
   en: {
-    navTitle: "Portfolio",
+    navTitle: "CARLA ESCRIG DURÁN",
     brandSubtitle: "3D animator & Visual Development artist",
     homeTitle: "HOME",
     aboutTitle: "ABOUT ME",
@@ -111,7 +111,7 @@ const i18n = {
   },
 
   es: {
-    navTitle: "Portafolio",
+    navTitle: "CARLA ESCRIG DURÁN",
     brandSubtitle: "Animadora 3D y artista de desarrollo visual",
     homeTitle: "INICIO",
     aboutTitle: "SOBRE MÍ",

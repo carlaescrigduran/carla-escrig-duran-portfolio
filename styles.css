@@ -126,9 +126,17 @@ nav {
   line-height: 1;
   text-transform: uppercase;
   background: linear-gradient(90deg, #ee8a86, #69c8cf, #ead45e);
+  background-size: 220% 220%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: brandGradientFlow 7s ease-in-out infinite;
+}
+
+@keyframes brandGradientFlow {
+  0%,
+  100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .brand small {

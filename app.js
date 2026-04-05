@@ -191,7 +191,7 @@ const timelineData = [
       en: "I was born on the 24th of June in 2002, in Barcelona, Spain. I was a naturally curious child and was fascinated by art at a very young age.",
       es: "Nací el 24 de junio de 2002 en Barcelona, España. Desde muy pequeña fui curiosa y el arte me fascinó desde temprano.",
     },
-    media: null, // later: { type: "img", src: "https://i.imgur.com/....jpg", alt: "..." }
+    media: { type: "img", src: "aboutimages/2002.jpg", alt: "Carla in childhood" },
   },
   {
     year: "2010",
@@ -202,7 +202,7 @@ const timelineData = [
       en: "I started exploring drawing and painting. Like all children, I was mesmerized by animated films, and I spent my days drawing princesses, dragons, mermaids, etc.",
       es: "Empecé a explorar el dibujo y la pintura. Como a cualquier niña, me encantaban las pelis de animación y pasaba el día dibujando princesas, dragones, sirenas, etc.",
     },
-    media: null,
+    media: { type: "img", src: "aboutimages/2010.jpg", alt: "Carla drawing in early years" },
   },
   {
     year: "2015",
@@ -213,7 +213,7 @@ const timelineData = [
       en: "As a teenager, my interests started to flourish. I began educating myself about the animation industry, and I knew I wanted to dedicate my life to it.",
       es: "En la adolescencia mis intereses empezaron a crecer. Empecé a aprender por mi cuenta sobre la industria de la animación y supe que quería dedicarme a ello.",
     },
-    media: null,
+    media: { type: "img", src: "aboutimages/2015.jpg", alt: "Carla exploring animation" },
   },
   {
     year: "2020",
@@ -224,7 +224,7 @@ const timelineData = [
       en: "My first year of college. I completed the 3D Animation & VFX degree at LaSalle URL and met amazing colleagues and teachers.",
       es: "Mi primer año de universidad. Cursé el grado de Animación 3D y VFX en LaSalle URL y conocí a compañeras/os y profes increíbles.",
     },
-    media: null,
+    media: { type: "img", src: "aboutimages/2020.jpg", alt: "Carla during university years" },
   },
   {
     year: "2024",
@@ -235,7 +235,7 @@ const timelineData = [
       en: "We started our thesis project. I collaborated on designs, backgrounds, props, storyboards, animatics, texturing, VFX and 3D animation.",
       es: "Empezamos el proyecto de tesis. Participé en diseño, fondos, props, storyboards, animatics, texturizado, VFX y animación 3D.",
     },
-    media: null,
+    media: { type: "img", src: "aboutimages/2024.png", alt: "Carla working on thesis" },
   },
   {
     year: "2026",
@@ -246,7 +246,7 @@ const timelineData = [
       en: "After completing a Master's in 3D Animation for Characters, I’m ready to start my journey in the animation industry.",
       es: "Tras completar un Máster en Animación 3D de personajes, estoy lista para empezar mi camino en la industria de la animación.",
     },
-    media: null,
+    media: { type: "video-file", src: "aboutimages/2026.mp4" },
   },
 ];
 
@@ -476,6 +476,8 @@ function renderTimeline() {
         mediaInner.innerHTML = `<img loading="lazy" src="${item.media.src}" alt="${item.media.alt || title}">`;
       } else if (mediaInner && item.media.type === "video") {
         mediaInner.innerHTML = `<iframe loading="lazy" src="${item.media.src}" title="${title}" allow="autoplay; fullscreen; picture-in-picture"></iframe>`;
+      } else if (mediaInner && item.media.type === "video-file") {
+        mediaInner.innerHTML = `<video autoplay muted loop playsinline controls preload="metadata" aria-label="${title}"><source src="${item.media.src}" type="video/mp4"></video>`;
       }
     }
 

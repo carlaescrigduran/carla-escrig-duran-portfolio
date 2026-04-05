@@ -706,7 +706,8 @@ textarea:focus-visible {
   padding: 0;
   border-radius: 50%;
   border: 3px solid var(--bg);
-  background: linear-gradient(135deg, #f2707f, #f05b75);
+  background: linear-gradient(135deg, #ee8a86, #69c8cf, #ead45e, #f2707f);
+  background-size: 240% 240%;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   color: #fff;
   font-family: "Katibeh", serif;
@@ -715,6 +716,13 @@ textarea:focus-visible {
   display: grid;
   place-items: center;
   align-self: center;
+  animation: timelineYearFlow 7s ease-in-out infinite;
+}
+
+@keyframes timelineYearFlow {
+  0%,
+  100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .timeline-media {

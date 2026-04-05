@@ -224,7 +224,12 @@ const timelineData = [
       en: "My first year of college. I completed the 3D Animation & VFX degree at LaSalle URL and met amazing colleagues and teachers.",
       es: "Mi primer año de universidad. Cursé el grado de Animación 3D y VFX en LaSalle URL y conocí a compañeras/os y profes increíbles.",
     },
-    media: { type: "img", src: "aboutimages/2020.jpg", alt: "Carla during university years" },
+    media: {
+      type: "img",
+      src: "aboutimages/2020.jpg",
+      alt: "Carla during university years",
+      position: "50% 35%",
+    },
   },
   {
     year: "2024",
@@ -474,7 +479,7 @@ function renderTimeline() {
       const mediaInner = row.querySelector(".timeline-media-inner");
       if (mediaInner && item.media.type === "img") {
         mediaInner.classList.add("has-asset");
-        mediaInner.innerHTML = `<img loading="lazy" src="${item.media.src}" alt="${item.media.alt || title}">`;
+        mediaInner.innerHTML = `<img loading="lazy" src="${item.media.src}" alt="${item.media.alt || title}" style="object-position:${item.media.position || "50% 50%"}">`;
       } else if (mediaInner && item.media.type === "video") {
         mediaInner.classList.add("has-asset");
         mediaInner.innerHTML = `<iframe loading="lazy" src="${item.media.src}" title="${title}" allow="autoplay; fullscreen; picture-in-picture"></iframe>`;

@@ -483,6 +483,7 @@ textarea:focus-visible {
 #contact {
   display: flex;
   flex-direction: column;
+  --contact-column-width: 520px;
 }
 
 #contact h2 {
@@ -491,12 +492,14 @@ textarea:focus-visible {
 
 #contact-form {
   order: 1;
-  width: min(100%, 520px);
+  width: min(100%, var(--contact-column-width));
   align-self: center;
 }
 
 #social-row {
   order: 2;
+  width: min(100%, var(--contact-column-width));
+  justify-content: flex-start;
 }
 
 #mailto-btn {

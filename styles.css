@@ -594,12 +594,12 @@ textarea:focus-visible {
 .about-page {
   background: var(--bg);
   color: var(--text);
-  font-size: 70%;
 }
 
 .about-page main {
   max-width: 1040px;
   padding-top: 64px;
+  font-size: 70%;
 }
 
 .about-page #about h2 {

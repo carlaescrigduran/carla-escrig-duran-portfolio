@@ -472,6 +472,8 @@ textarea:focus-visible {
 .contact-email-link {
   display: inline-flex;
   margin-top: 22px;
+  width: fit-content;
+  align-self: flex-start;
   position: relative;
   z-index: 1;
 }

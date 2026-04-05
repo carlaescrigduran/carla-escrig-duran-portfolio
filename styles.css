@@ -476,6 +476,27 @@ textarea:focus-visible {
   z-index: 1;
 }
 
+#contact {
+  display: flex;
+  flex-direction: column;
+}
+
+#contact h2 {
+  order: 0;
+}
+
+#contact-form {
+  order: 1;
+}
+
+#social-row {
+  order: 2;
+}
+
+#mailto-btn {
+  order: 3;
+}
+
 .social-btn {
   width: 60px;
   height: 60px;

@@ -701,6 +701,41 @@ html[data-theme="dark"] .about-page #about h2 {
   color: #8de1dc;
 }
 
+html[data-theme="dark"] .about-page {
+  background: #0b1020;
+  color: #e5e7eb;
+}
+
+html[data-theme="dark"] .about-intro {
+  color: rgba(229, 231, 235, 0.82);
+}
+
+html[data-theme="dark"] .about-timeline::before {
+  background: linear-gradient(180deg, #ff8f99, #8de1dc);
+}
+
+html[data-theme="dark"] .timeline-card {
+  background: rgba(17, 24, 39, 0.92);
+  border-color: rgba(229, 231, 235, 0.18);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.42);
+}
+
+html[data-theme="dark"] .timeline-card h3 {
+  color: #f3f4f6;
+}
+
+html[data-theme="dark"] .timeline-text {
+  color: rgba(229, 231, 235, 0.82);
+}
+
+html[data-theme="dark"] .timeline-year-pill {
+  border-color: #0b1020;
+}
+
+html[data-theme="dark"] .timeline-media-inner {
+  background: linear-gradient(135deg, #2a314f, #253a52);
+}
+
 .timeline-media-inner img,
 .timeline-media-inner iframe {
   width: 100%;

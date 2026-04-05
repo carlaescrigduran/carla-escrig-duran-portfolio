@@ -642,6 +642,7 @@ textarea:focus-visible {
   gap: 28px;
   margin-top: 16px;
   padding: 0 12px 28px;
+  --timeline-block-height: 240px;
 }
 
 .about-timeline::before {
@@ -670,11 +671,9 @@ textarea:focus-visible {
   border-radius: 20px;
   padding: 16px 18px;
   box-shadow: var(--shadow-sm);
-  min-height: 240px;
-  height: 100%;
+  height: var(--timeline-block-height);
   display: grid;
   align-content: center;
-  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
 .timeline-card h3 {
@@ -715,14 +714,11 @@ textarea:focus-visible {
 .timeline-media {
   border-radius: 20px;
   overflow: hidden;
-  min-height: 240px;
-  height: 100%;
-  transition: transform 220ms ease, box-shadow 220ms ease;
+  height: var(--timeline-block-height);
 }
 
 .timeline-media-inner {
   height: 100%;
-  min-height: 240px;
   border-radius: 20px;
   background: color-mix(in srgb, var(--bg) 70%, #f1dd9f 30%);
   display: grid;
@@ -762,28 +758,6 @@ textarea:focus-visible {
   color: rgba(255, 255, 255, 0.9);
   font-size: 14px;
   font-weight: 500;
-}
-
-.timeline-row.is-left .timeline-card {
-  transform: rotate(-1.2deg);
-}
-
-.timeline-row.is-left .timeline-media {
-  transform: rotate(1.2deg);
-}
-
-.timeline-row.is-right .timeline-card {
-  transform: rotate(1.2deg);
-}
-
-.timeline-row.is-right .timeline-media {
-  transform: rotate(-1.2deg);
-}
-
-.timeline-row:hover .timeline-card,
-.timeline-row:hover .timeline-media {
-  transform: rotate(0deg) translateY(-2px);
-  box-shadow: var(--shadow);
 }
 
 html[data-theme="dark"] .about-page #about h2 {
@@ -911,18 +885,13 @@ html[data-theme="dark"] .timeline-visual {
 
   .timeline-card {
     margin-left: 34px;
+    height: auto;
+    min-height: 220px;
   }
 
   .timeline-media {
     margin-left: 34px;
-  }
-
-  .timeline-row.is-left .timeline-card,
-  .timeline-row.is-left .timeline-media,
-  .timeline-row.is-right .timeline-card,
-  .timeline-row.is-right .timeline-media,
-  .timeline-row:hover .timeline-card,
-  .timeline-row:hover .timeline-media {
-    transform: none;
+    height: auto;
+    min-height: 220px;
   }
 }

@@ -676,6 +676,7 @@ textarea:focus-visible {
   height: var(--timeline-block-height);
   display: grid;
   align-content: center;
+  transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
 }
 
 .timeline-card h3 {
@@ -685,6 +686,7 @@ textarea:focus-visible {
   color: var(--text);
   font-family: "Katibeh", serif;
   font-weight: 400;
+  transition: color 240ms ease, transform 240ms ease;
 }
 
 .timeline-text {
@@ -692,6 +694,7 @@ textarea:focus-visible {
   font-size: 20px;
   line-height: 1.35;
   color: var(--muted);
+  transition: color 240ms ease;
 }
 
 .timeline-year-pill {
@@ -719,6 +722,8 @@ textarea:focus-visible {
   border-radius: 20px;
   overflow: hidden;
   height: var(--timeline-block-height);
+  box-shadow: var(--shadow-sm);
+  transition: transform 240ms ease, box-shadow 240ms ease;
 }
 
 .timeline-media-inner {
@@ -831,6 +836,33 @@ html[data-theme="dark"] .timeline-visual {
 .timeline-media-inner.has-asset iframe {
   transform: scale(1.06);
   transform-origin: center center;
+  transition: transform 360ms ease;
+}
+
+.timeline-row:hover .timeline-card {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+  border-color: color-mix(in srgb, var(--card-border) 55%, #69c8cf 45%);
+}
+
+.timeline-row:hover .timeline-card h3 {
+  transform: translateY(-1px);
+  color: color-mix(in srgb, var(--text) 65%, #5fbfb9 35%);
+}
+
+.timeline-row:hover .timeline-text {
+  color: color-mix(in srgb, var(--muted) 75%, var(--text) 25%);
+}
+
+.timeline-row:hover .timeline-media {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+.timeline-row:hover .timeline-media-inner.has-asset img,
+.timeline-row:hover .timeline-media-inner.has-asset video,
+.timeline-row:hover .timeline-media-inner.has-asset iframe {
+  transform: scale(1.1);
 }
 
 .timeline-row.is-right {
@@ -912,5 +944,16 @@ html[data-theme="dark"] .timeline-visual {
     margin-left: 34px;
     height: auto;
     min-height: 220px;
+  }
+
+  .timeline-row:hover .timeline-card,
+  .timeline-row:hover .timeline-media {
+    transform: none;
+  }
+
+  .timeline-row:hover .timeline-media-inner.has-asset img,
+  .timeline-row:hover .timeline-media-inner.has-asset video,
+  .timeline-row:hover .timeline-media-inner.has-asset iframe {
+    transform: scale(1.06);
   }
 }

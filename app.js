@@ -339,23 +339,7 @@ function toggleLang() {
 }
 
 function ensureHero() {
-  const home = $("#home");
-  if (!home) return;
-
-  if (!home.querySelector(".hero")) {
-    const hero = document.createElement("div");
-    hero.className = "hero";
-    hero.innerHTML = `
-      <h3 class="hero-name" id="hero-name"></h3>
-      <p class="hero-subtitle" id="hero-subtitle"></p>
-      <div class="hero-actions">
-        <a class="btn" href="contact.html" id="cta-contact"></a>
-        <a class="btn btn--ghost" href="animation.html" id="cta-reel"></a>
-        <div class="hero-chip"><span>Barcelona, Spain</span></div>
-      </div>
-    `;
-    home.insertBefore(hero, home.firstChild.nextSibling);
-  }
+  return;
 }
 
 function renderI18n() {
@@ -419,14 +403,6 @@ function renderI18n() {
   $("#personal-work h2") && ($("#personal-work h2").textContent = t.personalTitle);
   $("#personal-work p") && ($("#personal-work p").textContent = t.personalIntro);
   $("#contact h2") && ($("#contact h2").textContent = t.contactTitle);
-
-  // hero
-  ensureHero();
-  $("#hero-name") && ($("#hero-name").textContent = CONTENT.heroName);
-  $("#hero-subtitle") && ($("#hero-subtitle").textContent = CONTENT.subtitle[state.lang] || CONTENT.subtitle.en);
-  $("#cta-contact") && ($("#cta-contact").textContent = t.ctaContact);
-  $("#cta-reel") && ($("#cta-reel").textContent = t.ctaReel);
-  $(".hero-chip span") && ($(".hero-chip span").textContent = t.heroLocation);
 
   const langFab = $("#fab-lang");
   if (langFab) {

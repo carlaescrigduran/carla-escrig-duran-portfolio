@@ -599,9 +599,9 @@ textarea:focus-visible {
 }
 
 .about-page main {
-  max-width: 1040px;
-  padding-top: 64px;
-  font-size: 70%;
+  max-width: 1100px;
+  padding-top: 22px;
+  font-size: 100%;
 }
 
 .about-page #about h2 {

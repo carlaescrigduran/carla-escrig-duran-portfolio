@@ -29,6 +29,7 @@ const CONTENT = {
   welcome: { en: "", es: "" },
 
   reelVimeoUrl: "https://vimeo.com/1144153174?share=copy&fl=sv&fe=ci",
+  visdevReelSrc: "aboutimages/Home page/reel concept para el home page.mp4",
 
   contact: {
     email: "carlaescrigduran@gmail.com",
@@ -107,6 +108,7 @@ const i18n = {
     modalSubProps2: "Props & Details",
     modalSubFinal: "Final Illustrations",
     reelTitle: "Animation Reel",
+    visdevReelTitle: "Visual Development Reel",
     reelInvalid: "Reel link is missing or invalid.",
     langToggleAria: "Switch to Spanish",
     closeLabel: "Close",
@@ -179,6 +181,7 @@ const i18n = {
     modalSubProps2: "Props y detalles",
     modalSubFinal: "Ilustraciones finales",
     reelTitle: "Reel de animación",
+    visdevReelTitle: "Reel de desarrollo visual",
     reelInvalid: "Falta el enlace del reel o no es válido.",
     langToggleAria: "Cambiar a ingles",
     closeLabel: "Cerrar",
@@ -707,6 +710,23 @@ function renderVisDev() {
   const section = $("#visual-development");
   if (!section) return;
 
+  const t = i18n[state.lang];
+
+  let reel = section.querySelector("#visdev-reel");
+  if (!reel) {
+    reel = document.createElement("div");
+    reel.id = "visdev-reel";
+    section.insertAdjacentElement("beforeend", reel);
+  }
+
+  reel.innerHTML = `
+    <div class="media">
+      <video autoplay muted loop playsinline controls preload="metadata" aria-label="${t.visdevReelTitle}">
+        <source src="${CONTENT.visdevReelSrc}" type="video/mp4">
+      </video>
+    </div>
+  `;
+
   // Create buttons if not present
   let wrap = section.querySelector("#visdev-actions");
   if (!wrap) {
@@ -716,7 +736,6 @@ function renderVisDev() {
     section.appendChild(wrap);
   }
 
-  const t = i18n[state.lang];
   wrap.innerHTML = `
     <button class="btn" type="button" id="open-pet">${t.modalPet}</button>
     <button class="btn btn--ghost" type="button" id="open-merce">${t.modalMerce}</button>

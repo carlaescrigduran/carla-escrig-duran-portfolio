@@ -585,6 +585,14 @@ p { line-height: 1.6; }
   display: block;
 }
 
+.media video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  object-fit: cover;
+  display: block;
+}
+
 .tabs {
   display: flex;
   flex-wrap: wrap;

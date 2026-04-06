@@ -291,19 +291,6 @@ main .section {
   display: block;
 }
 
-.home-split__divider {
-  position: absolute;
-  top: -6%;
-  left: 50%;
-  width: 16px;
-  height: 112%;
-  transform: translateX(-50%) rotate(14deg);
-  background: #ffffff;
-  box-shadow: 0 0 22px rgba(255, 255, 255, 0.35);
-  z-index: 2;
-  pointer-events: none;
-}
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
@@ -991,14 +978,6 @@ html[data-theme="dark"] .timeline-visual {
 
   .home-split__panel--left {
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  }
-
-  .home-split__divider {
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 8px;
-    transform: translateY(-50%);
   }
 
   .about-page #about h2 {

@@ -263,6 +263,38 @@ main .section {
   border-right: 0;
 }
 
+.home-split__title {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-content: center;
+  gap: 2px;
+  text-align: center;
+  pointer-events: none;
+  padding: 18px;
+}
+
+.home-split__title h2 {
+  margin: 0;
+  font-family: "Katibeh", serif;
+  font-weight: 400;
+  font-size: clamp(52px, 8.2vw, 124px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  text-shadow: 0 5px 24px rgba(0, 0, 0, 0.75);
+}
+
+.home-split__title p {
+  margin: 0;
+  font-size: clamp(14px, 1.7vw, 22px);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.7);
+}
+
 .home-split__panel {
   position: absolute;
   inset: 0;
@@ -978,6 +1010,14 @@ html[data-theme="dark"] .timeline-visual {
 
   .home-split__panel--left {
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .home-split__title {
+    gap: 6px;
+  }
+
+  .home-split__title p {
+    letter-spacing: 0.12em;
   }
 
   .about-page #about h2 {

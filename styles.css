@@ -298,8 +298,8 @@ main .section {
   width: 16px;
   height: 112%;
   transform: translateX(-50%) rotate(14deg);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(95, 191, 185, 0.78), rgba(243, 127, 135, 0.8));
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+  background: #ffffff;
+  box-shadow: 0 0 22px rgba(255, 255, 255, 0.35);
   z-index: 2;
   pointer-events: none;
 }

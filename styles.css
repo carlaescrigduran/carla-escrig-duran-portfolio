@@ -329,6 +329,42 @@ main .section {
     0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
+.home-split__cta {
+  margin-top: clamp(12px, 2.2vw, 22px);
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  pointer-events: auto;
+}
+
+.home-split__btn {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  text-decoration: none;
+}
+
+.home-split__btn:hover {
+  text-decoration: none;
+  background: #ffffff;
+}
+
+.home-split__btn--alt {
+  background: rgba(15, 23, 42, 0.72);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #ffffff;
+}
+
+.home-split__btn--alt:hover {
+  background: rgba(15, 23, 42, 0.84);
+}
+
 .home-split__panel {
   position: absolute;
   inset: 0;
@@ -1056,6 +1092,16 @@ html[data-theme="dark"] .timeline-visual {
 
   .home-split__title p {
     letter-spacing: 0.12em;
+  }
+
+  .home-split__cta {
+    margin-top: 14px;
+    gap: 8px;
+  }
+
+  .home-split__btn {
+    font-size: 11px;
+    padding: 9px 11px;
   }
 
   .about-page #about h2 {

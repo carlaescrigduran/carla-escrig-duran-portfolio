@@ -57,6 +57,8 @@ const i18n = {
     ctaReel: "Watch reel",
     heroLocation: "Barcelona, Spain",
     homeWelcome: "Welcome to my portfolio!",
+    homeCtaAnimation: "Animation Reel",
+    homeCtaVisdev: "Visual Development",
     skipToContent: "Skip to content",
     aboutIntro:
       "Passionate about animation since my childhood and dreaming of working in it one day. I am becoming a professional 3D animator and Visual Development artist. I am a hardworking person and I give my 100% to any project I work on.",
@@ -127,6 +129,8 @@ const i18n = {
     ctaReel: "Ver reel",
     heroLocation: "Barcelona, España",
     homeWelcome: "¡Bienvenida/o a mi portafolio!",
+    homeCtaAnimation: "Reel de animación",
+    homeCtaVisdev: "Desarrollo visual",
     skipToContent: "Saltar al contenido",
     aboutIntro:
       "Apasionada por la animación desde la infancia y soñando con trabajar en este sector. Me estoy formando como profesional en animación 3D y desarrollo visual. Soy una persona trabajadora y doy el 100% en cada proyecto en el que participo.",
@@ -410,6 +414,8 @@ function renderI18n() {
   // section headers
   $("#home h2") && ($("#home h2").textContent = t.homeTitle);
   $("#home p") && ($("#home p").textContent = t.homeWelcome);
+  $("#home-cta-animation") && ($("#home-cta-animation").textContent = t.homeCtaAnimation);
+  $("#home-cta-visdev") && ($("#home-cta-visdev").textContent = t.homeCtaVisdev);
   $("#about h2") && ($("#about h2").textContent = t.aboutTitle);
   $(".about-intro") && ($(".about-intro").textContent = t.aboutIntro);
   $("#thesis h2") && ($("#thesis h2").textContent = t.thesisTitle);

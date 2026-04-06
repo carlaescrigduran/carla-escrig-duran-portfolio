@@ -29,7 +29,7 @@ const CONTENT = {
   welcome: { en: "", es: "" },
 
   reelVimeoUrl: "https://vimeo.com/1144153174?share=copy&fl=sv&fe=ci",
-  visdevReelSrc: "aboutimages/Home page/reel concept para el home page.mp4",
+  visdevReelSrc: "reelconcept/reelconcept.mp4",
 
   contact: {
     email: "carlaescrigduran@gmail.com",

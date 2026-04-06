@@ -283,7 +283,11 @@ main .section {
   line-height: 0.9;
   letter-spacing: 0.02em;
   color: #ffffff;
-  text-shadow: 0 5px 24px rgba(0, 0, 0, 0.75);
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.9),
+    0 6px 18px rgba(0, 0, 0, 0.75),
+    0 18px 48px rgba(0, 0, 0, 0.55),
+    0 32px 80px rgba(0, 0, 0, 0.35);
 }
 
 .home-split__title p {
@@ -292,7 +296,10 @@ main .section {
   font-weight: 600;
   letter-spacing: 0.24em;
   color: rgba(255, 255, 255, 0.96);
-  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.7);
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.9),
+    0 6px 16px rgba(0, 0, 0, 0.7),
+    0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
 .home-split__panel {

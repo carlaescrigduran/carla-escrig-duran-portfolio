@@ -519,24 +519,30 @@ function renderThesis() {
   if (!phases) return;
   phases.innerHTML = "";
 
-  const grid = document.createElement("div");
-  grid.className = "card-grid";
-  phases.appendChild(grid);
+  const sections = document.createElement("div");
+  sections.className = "thesis-sections";
+  phases.appendChild(sections);
 
   thesisPhases.forEach((p, i) => {
-    const card = document.createElement("article");
-    card.className = `card ${i % 2 === 0 ? "" : "card--tilt2"}`;
+    const phase = document.createElement("article");
+    phase.className = "thesis-phase";
 
-    card.innerHTML = `
-      <p class="card-title">
-        <strong>${p.title[state.lang] || p.title.en}</strong>
-        <small>${p.phase[state.lang] || p.phase.en}</small>
-      </p>
-      <div class="badge" style="margin-bottom:10px;">${p.group[state.lang] || p.group.en}</div>
-      <p style="margin:0;color:var(--muted)">${p.desc[state.lang] || p.desc.en}</p>
+    const title = p.title[state.lang] || p.title.en;
+    const phaseLabel = p.phase[state.lang] || p.phase.en;
+    const groupLabel = p.group[state.lang] || p.group.en;
+    const desc = p.desc[state.lang] || p.desc.en;
+
+    phase.innerHTML = `
+      <div class="thesis-phase__inner">
+        <p class="thesis-phase__index">${String(i + 1).padStart(2, "0")}</p>
+        <p class="thesis-phase__meta">${phaseLabel}</p>
+        <h3 class="thesis-phase__title">${title}</h3>
+        <p class="badge thesis-phase__group">${groupLabel}</p>
+        <p class="thesis-phase__desc">${desc}</p>
+      </div>
     `;
 
-    grid.appendChild(card);
+    sections.appendChild(phase);
   });
 }
 

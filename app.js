@@ -28,8 +28,8 @@ const CONTENT = {
   },
   welcome: { en: "", es: "" },
 
-  reelVimeoUrl: "https://vimeo.com/1144153174?share=copy&fl=sv&fe=ci",
-  visdevReelSrc: "reelconcept/reelconcept.mp4",
+  animationReelSrc: "Reels/Carla Escrig Duran 3D Animation Reel.mp4",
+  visdevReelSrc: "Reels/2425_CarlaEscrig_Concept_Reel_V5.mp4",
 
   contact: {
     email: "carlaescrigduran@gmail.com",
@@ -564,14 +564,15 @@ function renderReel() {
   if (!reel) return;
   const t = i18n[state.lang];
 
-  const embed = vimeoEmbedFromUrl(CONTENT.reelVimeoUrl);
   reel.innerHTML = "";
 
   const wrapper = document.createElement("div");
   wrapper.className = "media";
-  wrapper.innerHTML = embed
-    ? `<iframe src="${embed}" title="${t.reelTitle}" allow="autoplay; fullscreen; picture-in-picture" loading="lazy"></iframe>`
-    : `<div class="card"><p style="margin:0;color:var(--muted)">${t.reelInvalid}</p></div>`;
+  wrapper.innerHTML = `
+    <video autoplay muted loop playsinline controls preload="metadata" aria-label="${t.reelTitle}">
+      <source src="${CONTENT.animationReelSrc}" type="video/mp4">
+    </video>
+  `;
 
   reel.appendChild(wrapper);
 }

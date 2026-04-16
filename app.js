@@ -727,7 +727,7 @@ function renderVisDev() {
 
   reel.innerHTML = `
     <div class="media">
-      <video autoplay loop playsinline controls preload="metadata" aria-label="${t.visdevReelTitle}">
+      <video loop playsinline controls preload="metadata" aria-label="${t.visdevReelTitle}">
         <source src="${CONTENT.visdevReelSrc}" type="video/mp4">
       </video>
     </div>

@@ -569,7 +569,9 @@ function renderReel() {
   const wrapper = document.createElement("div");
   wrapper.className = "media";
   wrapper.innerHTML = `
-    <iframe src="https://player.vimeo.com/video/1183662839?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="1920" height="1080" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Carla Escrig Duran 3D Animation Reel"></iframe>
+    <video autoplay muted loop playsinline controls preload="metadata" aria-label="${t.reelTitle}">
+      <source src="Reels/Carla Escrig Duran 3D Animation Reel.mp4" type="video/mp4">
+    </video>
   `;
 
   reel.appendChild(wrapper);

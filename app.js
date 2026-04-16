@@ -569,7 +569,7 @@ function renderReel() {
   const wrapper = document.createElement("div");
   wrapper.className = "media";
   wrapper.innerHTML = `
-    <video autoplay muted loop playsinline controls preload="metadata" aria-label="${t.reelTitle}" width="100%" height="100%">
+    <video autoplay loop playsinline controls preload="metadata" aria-label="${t.reelTitle}" width="100%" height="100%">
       <source src="Reels/Carla Escrig Duran 3D Animation Reel.mp4" type="video/mp4">
     </video>
   `;

@@ -569,7 +569,7 @@ function renderReel() {
   const wrapper = document.createElement("div");
   wrapper.className = "media";
   wrapper.innerHTML = `
-    <video loop playsinline controls preload="metadata" aria-label="${t.reelTitle}" width="100%" height="100%">
+    <video loop playsinline controls preload="auto" aria-label="${t.reelTitle}" width="100%" height="100%">
       <source src="Reels/Carla Escrig Duran 3D Animation Reel.mp4" type="video/mp4">
     </video>
   `;
@@ -729,7 +729,7 @@ function renderVisDev() {
 
   reel.innerHTML = `
     <div class="media">
-      <video loop playsinline controls preload="metadata" aria-label="${t.visdevReelTitle}">
+      <video loop playsinline controls preload="auto" aria-label="${t.visdevReelTitle}">
         <source src="${CONTENT.visdevReelSrc}" type="video/mp4">
       </video>
     </div>

@@ -28,7 +28,7 @@ const CONTENT = {
   },
   welcome: { en: "", es: "" },
 
-  animationReelSrc: "Reels/Carla Escrig Duran 3D Animation Reel.mp4",
+  animationReelSrc: "https://vimeo.com/1144153174",
   visdevReelSrc: "Reels/2425_CarlaEscrig_Concept_Reel_V5.mp4",
 
   contact: {
@@ -569,9 +569,7 @@ function renderReel() {
   const wrapper = document.createElement("div");
   wrapper.className = "media";
   wrapper.innerHTML = `
-    <video autoplay muted loop playsinline controls preload="metadata" aria-label="${t.reelTitle}">
-      <source src="${CONTENT.animationReelSrc}" type="video/mp4">
-    </video>
+    <iframe src="https://player.vimeo.com/video/1144153174" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" allowfullscreen></iframe>
   `;
 
   reel.appendChild(wrapper);
@@ -729,7 +727,7 @@ function renderVisDev() {
 
   reel.innerHTML = `
     <div class="media">
-      <video autoplay muted loop playsinline controls preload="metadata" aria-label="${t.visdevReelTitle}">
+      <video autoplay loop playsinline controls preload="metadata" aria-label="${t.visdevReelTitle}">
         <source src="${CONTENT.visdevReelSrc}" type="video/mp4">
       </video>
     </div>

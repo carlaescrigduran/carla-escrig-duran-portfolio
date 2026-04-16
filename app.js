@@ -28,7 +28,7 @@ const CONTENT = {
   },
   welcome: { en: "", es: "" },
 
-  animationReelSrc: "https://vimeo.com/1144153174",
+  animationReelSrc: "https://youtu.be/3xQGl8kr6ZI",
   visdevReelSrc: "Reels/2425_CarlaEscrig_Concept_Reel_V5.mp4",
 
   contact: {
@@ -559,6 +559,22 @@ function vimeoEmbedFromUrl(url) {
   }
 }
 
+function youtubeEmbedFromUrl(url) {
+  try {
+    const u = new URL(url);
+    let id;
+    if (u.hostname === 'youtu.be') {
+      id = u.pathname.slice(1);
+    } else if (u.hostname.includes('youtube.com')) {
+      id = u.searchParams.get('v');
+    }
+    if (!id) return null;
+    return `https://www.youtube.com/embed/${id}`;
+  } catch {
+    return null;
+  }
+}
+
 function renderReel() {
   const reel = $("#reel");
   if (!reel) return;
@@ -568,11 +584,24 @@ function renderReel() {
 
   const wrapper = document.createElement("div");
   wrapper.className = "media";
-  wrapper.innerHTML = `
-    <video loop playsinline controls preload="auto" aria-label="${t.reelTitle}" width="100%" height="100%">
-      <source src="Reels/Carla Escrig Duran 3D Animation Reel.mp4" type="video/mp4">
-    </video>
-  `;
+
+  const src = CONTENT.animationReelSrc;
+  let embedUrl = null;
+  if (src.includes('vimeo.com')) {
+    embedUrl = vimeoEmbedFromUrl(src);
+  } else if (src.includes('youtu')) {
+    embedUrl = youtubeEmbedFromUrl(src);
+  }
+
+  if (embedUrl) {
+    wrapper.innerHTML = `<iframe src="${embedUrl}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+  } else {
+    wrapper.innerHTML = `
+      <video loop playsinline controls preload="auto" aria-label="${t.reelTitle}" width="100%" height="100%">
+        <source src="${src}" type="video/mp4">
+      </video>
+    `;
+  }
 
   reel.appendChild(wrapper);
 }

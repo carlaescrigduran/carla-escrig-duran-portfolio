@@ -1294,31 +1294,3 @@ html[data-theme="dark"] .timeline-visual {
     transform: scale(1.06);
   }
 }
-.project-showcase {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    font-family: 'Inter', sans-serif;
-}
-
-.complete-short-film h2 {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 1rem;
-    border-left: 4px solid #007bff;
-    padding-left: 15px;
-}
-
-.video-wrapper {
-    position: relative;
-    background-color: #000;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.main-feature {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-}

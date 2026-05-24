@@ -827,6 +827,30 @@ function wireEvents() {
     notice.textContent = msg;
     e.target.reset();
   });
+
+  const navToggle = $("#nav-toggle");
+  navToggle?.addEventListener("click", (ev) => {
+    const menu = $("#primary-menu");
+    if (!menu) return;
+    const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+    navToggle.setAttribute("aria-expanded", String(!isOpen));
+    menu.classList.toggle("menu-open", !isOpen);
+  });
+
+  // Close mobile menu when clicking outside or on a menu link
+  document.addEventListener("click", (e) => {
+    const menu = $("#primary-menu");
+    if (!menu || !menu.classList.contains("menu-open")) return;
+    const insideNav = e.target.closest && e.target.closest("nav");
+    if (!insideNav) {
+      menu.classList.remove("menu-open");
+      navToggle?.setAttribute("aria-expanded", "false");
+    }
+    if (e.target.closest && e.target.closest("#primary-menu a")) {
+      menu.classList.remove("menu-open");
+      navToggle?.setAttribute("aria-expanded", "false");
+    }
+  });
 }
 
 function renderAll() {

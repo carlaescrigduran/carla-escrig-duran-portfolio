@@ -194,6 +194,17 @@ nav {
   display: none;
 }
 
+.nav-toggle {
+  display: none;
+  appearance: none;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 .btn {
   appearance: none;
   border: 1px solid var(--card-border);
@@ -1163,6 +1174,40 @@ html[data-theme="dark"] .timeline-visual {
 
   .menu-links a {
     white-space: nowrap;
+  }
+
+  /* Mobile nav behavior: hide links behind toggle */
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    width: 44px;
+    height: 44px;
+  }
+
+  .menu-links {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    background: transparent;
+    padding: 0;
+    margin: 8px 0 0 0;
+  }
+
+  .menu-links.menu-open {
+    display: flex;
+    background: var(--card-strong);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .nav-actions {
+    display: flex;
+    gap: 8px;
+    justify-self: end;
   }
 
   .brand h1 { font-size: 30px; }

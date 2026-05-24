@@ -264,6 +264,7 @@ const timelineData = [
 
 const thesisPhases = [
   {
+    key: "complete-short-film",
     group: { en: "FINAL RESULT", es: "RESULTADO FINAL" },
     phase: { en: "Complete Short Film", es: "Corto completo" },
     title: { en: "Complete Short Film", es: "Corto final" },
@@ -274,6 +275,7 @@ const thesisPhases = [
     link: "https://youtu.be/3xQGl8kr6ZI",
   },
   {
+    key: "concept-art",
     group: { en: "PRE-PRODUCTION", es: "PREPRODUCCIÓN" },
     phase: { en: "PHASE 1", es: "FASE 1" },
     title: { en: "Concept Art", es: "Arte conceptual" },
@@ -283,6 +285,7 @@ const thesisPhases = [
     },
   },
   {
+    key: "animatic",
     group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
     phase: { en: "PHASE 3", es: "FASE 3" },
     title: { en: "Animatic", es: "Animática" },
@@ -292,6 +295,7 @@ const thesisPhases = [
     },
   },
   {
+    key: "layout",
     group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
     phase: { en: "PHASE 4", es: "FASE 4" },
     title: { en: "Layout", es: "Composición" },
@@ -301,6 +305,7 @@ const thesisPhases = [
     },
   },
   {
+    key: "animation",
     group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
     phase: { en: "PHASE 5", es: "FASE 5" },
     title: { en: "3D Animation", es: "Animación 3D" },
@@ -310,6 +315,7 @@ const thesisPhases = [
     },
   },
   {
+    key: "visual-effects",
     group: { en: "POST-PRODUCTION", es: "POSTPRODUCCIÓN" },
     phase: { en: "PHASE 6", es: "FASE 6" },
     title: { en: "Visual Effects", es: "Efectos visuales" },
@@ -319,6 +325,7 @@ const thesisPhases = [
     },
   },
   {
+    key: "graphic-design",
     group: { en: "POST-PRODUCTION", es: "POSTPRODUCCIÓN" },
     phase: { en: "PHASE 7", es: "FASE 7" },
     title: { en: "Graphic Design", es: "Diseño gráfico" },
@@ -564,6 +571,34 @@ function renderThesis() {
       <p class="thesis-phase__desc">${desc}</p>
     `;
     phase.appendChild(inner);
+
+    // Add gallery for phases that are not the first one
+    if (i > 0 && p.key) {
+      const galleryWrapper = document.createElement("div");
+      galleryWrapper.className = "thesis-gallery-wrapper";
+
+      const galleryLabel = document.createElement("p");
+      galleryLabel.className = "thesis-gallery-label";
+      galleryLabel.textContent = state.lang === "es" ? "Subir archivos para esta sección:" : "Upload assets for this phase:";
+
+      const galleryControls = document.createElement("div");
+      galleryControls.className = "illustrations-controls";
+      galleryControls.innerHTML = `
+        <label class="btn" for="thesis-input-${p.key}">Subir media</label>
+        <input id="thesis-input-${p.key}" class="illustration-input" type="file" accept="image/*,video/*" multiple />
+        <button class="btn btn--ghost" data-clear-thesis="${p.key}">Borrar</button>
+      `;
+
+      const gallery = document.createElement("div");
+      gallery.id = `thesis-gallery-${p.key}`;
+      gallery.className = "gallery-grid";
+
+      galleryWrapper.appendChild(galleryLabel);
+      galleryWrapper.appendChild(galleryControls);
+      galleryWrapper.appendChild(gallery);
+      phase.appendChild(galleryWrapper);
+    }
+
     sections.appendChild(phase);
   });
 }
@@ -746,6 +781,120 @@ function wireIllustrationEvents() {
   $("#clear-illustrations")?.addEventListener("click", () => {
     localStorage.removeItem(ILLU_KEY);
     renderIllustrations();
+  });
+}
+
+/* ---------- Thesis phase galleries (localStorage) ---------- */
+const THESIS_PREFIX = "thesis_phase_";
+
+function loadThesisPhase(key) {
+  try {
+    const raw = localStorage.getItem(THESIS_PREFIX + key);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveThesisPhase(key, arr) {
+  try {
+    localStorage.setItem(THESIS_PREFIX + key, JSON.stringify(arr.slice(0, 100)));
+  } catch {}
+}
+
+function renderThesisPhaseGallery(key) {
+  const container = $(`#thesis-gallery-${key}`);
+  if (!container) return;
+  const items = loadThesisPhase(key);
+  container.innerHTML = "";
+  if (!items.length) {
+    container.innerHTML = `<div class="gallery-empty">Sin archivos aún.</div>`;
+    return;
+  }
+  items.forEach((dataUrl, idx) => {
+    const item = document.createElement("div");
+    item.className = "gallery-item";
+    item.innerHTML = `
+      <img src="${dataUrl}" alt="Asset ${idx + 1}" loading="lazy">
+      <div class="item-actions">
+        <button class="small-btn" data-action="download" data-key="${key}" data-idx="${idx}">↓</button>
+        <button class="small-btn" data-action="delete" data-key="${key}" data-idx="${idx}">✕</button>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+function handleThesisPhaseFiles(key, files) {
+  if (!files || !files.length) return;
+  const cur = loadThesisPhase(key);
+  const toRead = Array.from(files).slice(0, 50);
+  let readCount = 0;
+  toRead.forEach((f) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      cur.push(e.target.result);
+      readCount += 1;
+      if (readCount === toRead.length) {
+        saveThesisPhase(key, cur);
+        renderThesisPhaseGallery(key);
+      }
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+function wireThesisPhaseEvents() {
+  // Wire input changes for each thesis phase
+  thesisPhases.forEach((p) => {
+    if (p.key && p.key !== "complete-short-film") {
+      const input = $(`#thesis-input-${p.key}`);
+      if (input) {
+        input.addEventListener("change", (e) => {
+          handleThesisPhaseFiles(p.key, e.target.files);
+          input.value = "";
+        });
+      }
+    }
+  });
+
+  // Wire gallery item actions and clear buttons
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest && e.target.closest("button[data-action]");
+    if (!btn || !btn.dataset.key) return;
+    const key = btn.dataset.key;
+    const idx = Number(btn.dataset.idx);
+    const action = btn.dataset.action;
+    const items = loadThesisPhase(key);
+    if (action === "delete") {
+      items.splice(idx, 1);
+      saveThesisPhase(key, items);
+      renderThesisPhaseGallery(key);
+    } else if (action === "download") {
+      const link = document.createElement("a");
+      link.href = items[idx];
+      link.download = `thesis-${key}-${idx + 1}.png`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest && e.target.closest("button[data-clear-thesis]");
+    if (!btn) return;
+    const key = btn.dataset.clearThesis;
+    localStorage.removeItem(THESIS_PREFIX + key);
+    renderThesisPhaseGallery(key);
+  });
+}
+
+function renderAllThesisGalleries() {
+  thesisPhases.forEach((p) => {
+    if (p.key && p.key !== "complete-short-film") {
+      renderThesisPhaseGallery(p.key);
+    }
   });
 }
 
@@ -976,6 +1125,7 @@ function renderAll() {
   renderReel();
   renderContact();
   renderVisDev();
+  renderAllThesisGalleries();
 }
 
 function init() {
@@ -986,6 +1136,7 @@ function init() {
   wireEvents();
   renderIllustrations();
   wireIllustrationEvents();
+  wireThesisPhaseEvents();
 }
 
 init();

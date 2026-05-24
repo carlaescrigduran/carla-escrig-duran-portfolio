@@ -318,13 +318,8 @@ const thesisPhases = [
       es: "Magia y atmósfera: partículas, simulaciones y efectos que potencian la historia.",
     },
     videos: [
-      "6.VFX/1.mov",
-      "6.VFX/3.mp4",
-      "6.VFX/5.mov",
-      "6.VFX/6.mov",
-      "6.VFX/Humo_con_textura_2D_Carla_Escrig_Duran.mp4",
-      "6.VFX/KRS_SC020_SH040_v02.mov",
-      "6.VFX/KRS_SC020_SH050_v01.mov"
+      "6.VFX/2.mp4",
+      "6.VFX/3.mp4"
     ]
   },
   {

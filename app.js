@@ -317,6 +317,15 @@ const thesisPhases = [
       en: "Adding magic and atmosphere - particle systems, simulations, and effects that enhance the story.",
       es: "Magia y atmósfera: partículas, simulaciones y efectos que potencian la historia.",
     },
+    videos: [
+      "6.VFX/1.mov",
+      "6.VFX/3.mp4",
+      "6.VFX/5.mov",
+      "6.VFX/6.mov",
+      "6.VFX/Humo_con_textura_2D_Carla_Escrig_Duran.mp4",
+      "6.VFX/KRS_SC020_SH040_v02.mov",
+      "6.VFX/KRS_SC020_SH050_v01.mov"
+    ]
   },
   {
     group: { en: "POST-PRODUCTION", es: "POSTPRODUCCIÓN" },
@@ -546,6 +555,13 @@ function renderThesis() {
       } else if (p.link.endsWith('.mp4')) {
         mediaHtml = `<div class="thesis-phase__media"><video loop playsinline controls preload="auto" width="100%" height="100%"><source src="${p.link}" type="video/mp4"></video></div>`;
       }
+    } else if (p.videos && p.videos.length > 0) {
+      mediaHtml = `<div class="thesis-phase__media-grid">`;
+      p.videos.forEach(video => {
+        const isMov = video.endsWith('.mov');
+        mediaHtml += `<div class="thesis-phase__media-item"><video loop playsinline controls preload="auto" width="100%" height="100%"><source src="${video}" type="${isMov ? 'video/quicktime' : 'video/mp4'}"></video></div>`;
+      });
+      mediaHtml += `</div>`;
     }
 
     phase.innerHTML = `

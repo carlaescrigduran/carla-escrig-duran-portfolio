@@ -571,34 +571,6 @@ function renderThesis() {
       <p class="thesis-phase__desc">${desc}</p>
     `;
     phase.appendChild(inner);
-
-    // Add gallery for phases that are not the first one
-    if (i > 0 && p.key) {
-      const galleryWrapper = document.createElement("div");
-      galleryWrapper.className = "thesis-gallery-wrapper";
-
-      const galleryLabel = document.createElement("p");
-      galleryLabel.className = "thesis-gallery-label";
-      galleryLabel.textContent = state.lang === "es" ? "Subir archivos para esta sección:" : "Upload assets for this phase:";
-
-      const galleryControls = document.createElement("div");
-      galleryControls.className = "illustrations-controls";
-      galleryControls.innerHTML = `
-        <label class="btn" for="thesis-input-${p.key}">Subir media</label>
-        <input id="thesis-input-${p.key}" class="illustration-input" type="file" accept="image/*,video/*" multiple />
-        <button class="btn btn--ghost" data-clear-thesis="${p.key}">Borrar</button>
-      `;
-
-      const gallery = document.createElement("div");
-      gallery.id = `thesis-gallery-${p.key}`;
-      gallery.className = "gallery-grid";
-
-      galleryWrapper.appendChild(galleryLabel);
-      galleryWrapper.appendChild(galleryControls);
-      galleryWrapper.appendChild(gallery);
-      phase.appendChild(galleryWrapper);
-    }
-
     sections.appendChild(phase);
   });
 }
@@ -1125,7 +1097,6 @@ function renderAll() {
   renderReel();
   renderContact();
   renderVisDev();
-  renderAllThesisGalleries();
 }
 
 function init() {
@@ -1136,7 +1107,6 @@ function init() {
   wireEvents();
   renderIllustrations();
   wireIllustrationEvents();
-  wireThesisPhaseEvents();
 }
 
 init();

@@ -264,7 +264,6 @@ const timelineData = [
 
 const thesisPhases = [
   {
-    key: "complete-short-film",
     group: { en: "FINAL RESULT", es: "RESULTADO FINAL" },
     phase: { en: "Complete Short Film", es: "Corto completo" },
     title: { en: "Complete Short Film", es: "Corto final" },
@@ -272,10 +271,9 @@ const thesisPhases = [
       en: "The culmination of our team's hard work - watch the final animated short film.",
       es: "El resultado final del trabajo del equipo: mira el corto final.",
     },
-    link: "https://youtu.be/3xQGl8kr6ZI",
+    link: "aboutimages/2026.mp4",
   },
   {
-    key: "concept-art",
     group: { en: "PRE-PRODUCTION", es: "PREPRODUCCIÓN" },
     phase: { en: "PHASE 1", es: "FASE 1" },
     title: { en: "Concept Art", es: "Arte conceptual" },
@@ -285,7 +283,6 @@ const thesisPhases = [
     },
   },
   {
-    key: "animatic",
     group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
     phase: { en: "PHASE 3", es: "FASE 3" },
     title: { en: "Animatic", es: "Animática" },
@@ -295,7 +292,6 @@ const thesisPhases = [
     },
   },
   {
-    key: "layout",
     group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
     phase: { en: "PHASE 4", es: "FASE 4" },
     title: { en: "Layout", es: "Composición" },
@@ -305,7 +301,6 @@ const thesisPhases = [
     },
   },
   {
-    key: "animation",
     group: { en: "PRODUCTION", es: "PRODUCCIÓN" },
     phase: { en: "PHASE 5", es: "FASE 5" },
     title: { en: "3D Animation", es: "Animación 3D" },
@@ -315,7 +310,6 @@ const thesisPhases = [
     },
   },
   {
-    key: "visual-effects",
     group: { en: "POST-PRODUCTION", es: "POSTPRODUCCIÓN" },
     phase: { en: "PHASE 6", es: "FASE 6" },
     title: { en: "Visual Effects", es: "Efectos visuales" },
@@ -325,7 +319,6 @@ const thesisPhases = [
     },
   },
   {
-    key: "graphic-design",
     group: { en: "POST-PRODUCTION", es: "POSTPRODUCCIÓN" },
     phase: { en: "PHASE 7", es: "FASE 7" },
     title: { en: "Graphic Design", es: "Diseño gráfico" },
@@ -540,37 +533,32 @@ function renderThesis() {
     const groupLabel = p.group[state.lang] || p.group.en;
     const desc = p.desc[state.lang] || p.desc.en;
 
-    const inner = document.createElement("div");
-    inner.className = "thesis-phase__inner";
-
-    // If the phase includes a link, add video inside the white box
+    let mediaHtml = "";
     if (p.link) {
-      const mediaContainer = document.createElement("div");
-      mediaContainer.className = "thesis-phase__media";
-      let embed = null;
-      if (p.link.includes("vimeo.com")) {
-        const v = vimeoEmbedFromUrl(p.link) || p.link;
-        embed = `<iframe src="${v}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-      } else if (p.link.includes("youtu")) {
-        const y = youtubeEmbedFromUrl(p.link) || p.link;
-        embed = `<iframe src="${y}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-      } else if (p.link.match(/\.mp4(\?|$)/)) {
-        embed = `<video loop controls preload="metadata" playsinline><source src="${p.link}" type="video/mp4"></video>`;
-      } else {
-        embed = `<iframe src="${p.link}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+      let embedUrl = null;
+      if (p.link.includes('vimeo.com')) {
+        embedUrl = vimeoEmbedFromUrl(p.link);
+      } else if (p.link.includes('youtu')) {
+        embedUrl = youtubeEmbedFromUrl(p.link);
       }
-      mediaContainer.innerHTML = embed;
-      inner.appendChild(mediaContainer);
+      if (embedUrl) {
+        mediaHtml = `<div class="thesis-phase__media"><iframe src="${embedUrl}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+      } else if (p.link.endsWith('.mp4')) {
+        mediaHtml = `<div class="thesis-phase__media"><video loop playsinline controls preload="auto" width="100%" height="100%"><source src="${p.link}" type="video/mp4"></video></div>`;
+      }
     }
 
-    inner.innerHTML += `
-      <p class="thesis-phase__index">${String(i + 1).padStart(2, "0")}</p>
-      <p class="thesis-phase__meta">${phaseLabel}</p>
-      <h3 class="thesis-phase__title">${title}</h3>
-      <p class="badge thesis-phase__group">${groupLabel}</p>
-      <p class="thesis-phase__desc">${desc}</p>
+    phase.innerHTML = `
+      <div class="thesis-phase__inner">
+        <p class="thesis-phase__index">${String(i + 1).padStart(2, "0")}</p>
+        <p class="thesis-phase__meta">${phaseLabel}</p>
+        <h3 class="thesis-phase__title">${title}</h3>
+        <p class="badge thesis-phase__group">${groupLabel}</p>
+        <p class="thesis-phase__desc">${desc}</p>
+        ${mediaHtml}
+      </div>
     `;
-    phase.appendChild(inner);
+
     sections.appendChild(phase);
   });
 }
@@ -659,101 +647,6 @@ function ensureContactExtras() {
   if (row && mail && row.nextElementSibling !== mail) {
     row.insertAdjacentElement("afterend", mail);
   }
-}
-
-/* ---------- Illustrations upload + preview (localStorage) ---------- */
-const ILLU_KEY = "personal_illustrations";
-
-function loadIllustrations() {
-  try {
-    const raw = localStorage.getItem(ILLU_KEY);
-    const arr = raw ? JSON.parse(raw) : [];
-    return Array.isArray(arr) ? arr : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveIllustrations(arr) {
-  try {
-    localStorage.setItem(ILLU_KEY, JSON.stringify(arr.slice(0, 100)));
-  } catch {}
-}
-
-function renderIllustrations() {
-  const container = $("#illustrations-gallery");
-  if (!container) return;
-  const items = loadIllustrations();
-  container.innerHTML = "";
-  if (!items.length) {
-    container.innerHTML = `<div class="gallery-empty">No hay imágenes aún. Usa "Subir imágenes" para añadir previsualizaciones.</div>`;
-    return;
-  }
-
-  items.forEach((dataUrl, idx) => {
-    const item = document.createElement("div");
-    item.className = "gallery-item";
-    item.innerHTML = `
-      <img src="${dataUrl}" alt="Illustration ${idx + 1}" loading="lazy">
-      <div class="item-actions">
-        <button class="small-btn" data-action="download" data-idx="${idx}">↓</button>
-        <button class="small-btn" data-action="delete" data-idx="${idx}">✕</button>
-      </div>
-    `;
-    container.appendChild(item);
-  });
-}
-
-function handleIllustrationFiles(files) {
-  if (!files || !files.length) return;
-  const cur = loadIllustrations();
-  const toRead = Array.from(files).slice(0, 50);
-  let readCount = 0;
-  toRead.forEach((f) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      cur.push(e.target.result);
-      readCount += 1;
-      if (readCount === toRead.length) {
-        saveIllustrations(cur);
-        renderIllustrations();
-      }
-    };
-    reader.readAsDataURL(f);
-  });
-}
-
-function wireIllustrationEvents() {
-  const input = $("#illustration-input");
-  input?.addEventListener("change", (e) => {
-    handleIllustrationFiles(e.target.files);
-    input.value = "";
-  });
-
-  $("#illustrations-gallery")?.addEventListener("click", (e) => {
-    const btn = e.target.closest && e.target.closest("button[data-action]");
-    if (!btn) return;
-    const idx = Number(btn.dataset.idx);
-    const action = btn.dataset.action;
-    const items = loadIllustrations();
-    if (action === "delete") {
-      items.splice(idx, 1);
-      saveIllustrations(items);
-      renderIllustrations();
-    } else if (action === "download") {
-      const link = document.createElement("a");
-      link.href = items[idx];
-      link.download = `illustration-${idx + 1}.png`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }
-  });
-
-  $("#clear-illustrations")?.addEventListener("click", () => {
-    localStorage.removeItem(ILLU_KEY);
-    renderIllustrations();
-  });
 }
 
 function renderContact() {
@@ -950,30 +843,6 @@ function wireEvents() {
     notice.textContent = msg;
     e.target.reset();
   });
-
-  const navToggle = $("#nav-toggle");
-  navToggle?.addEventListener("click", (ev) => {
-    const menu = $("#primary-menu");
-    if (!menu) return;
-    const isOpen = navToggle.getAttribute("aria-expanded") === "true";
-    navToggle.setAttribute("aria-expanded", String(!isOpen));
-    menu.classList.toggle("menu-open", !isOpen);
-  });
-
-  // Close mobile menu when clicking outside or on a menu link
-  document.addEventListener("click", (e) => {
-    const menu = $("#primary-menu");
-    if (!menu || !menu.classList.contains("menu-open")) return;
-    const insideNav = e.target.closest && e.target.closest("nav");
-    if (!insideNav) {
-      menu.classList.remove("menu-open");
-      navToggle?.setAttribute("aria-expanded", "false");
-    }
-    if (e.target.closest && e.target.closest("#primary-menu a")) {
-      menu.classList.remove("menu-open");
-      navToggle?.setAttribute("aria-expanded", "false");
-    }
-  });
 }
 
 function renderAll() {
@@ -991,8 +860,6 @@ function init() {
   applyTheme();
   renderAll();
   wireEvents();
-  renderIllustrations();
-  wireIllustrationEvents();
 }
 
 init();

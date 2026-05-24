@@ -542,6 +542,26 @@ function renderThesis() {
         <p class="thesis-phase__desc">${desc}</p>
       </div>
     `;
+    // If the phase includes a link, embed video (YouTube/Vimeo) or local mp4
+    if (p.link) {
+      const mediaContainer = document.createElement("div");
+      mediaContainer.className = "media";
+      let embed = null;
+      if (p.link.includes("vimeo.com")) {
+        const v = vimeoEmbedFromUrl(p.link) || p.link;
+        embed = `<iframe src="${v}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+      } else if (p.link.includes("youtu")) {
+        const y = youtubeEmbedFromUrl(p.link) || p.link;
+        embed = `<iframe src="${y}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+      } else if (p.link.match(/\.mp4(\?|$)/)) {
+        embed = `<video loop controls preload="metadata" playsinline><source src="${p.link}" type="video/mp4"></video>`;
+      } else {
+        // fallback: try to embed as iframe
+        embed = `<iframe src="${p.link}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+      }
+      mediaContainer.innerHTML = embed;
+      phase.appendChild(mediaContainer);
+    }
 
     sections.appendChild(phase);
   });

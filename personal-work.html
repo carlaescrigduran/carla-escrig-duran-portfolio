@@ -35,6 +35,19 @@
     <section id="personal-work" class="section">
       <h2>PERSONAL WORK</h2>
       <p>My creative explorations.</p>
+
+      <section id="illustrations" class="illustrations">
+        <h3>Illustrations</h3>
+        <p class="muted">Sube tus imágenes aquí para previsualizarlas en esta sección (se guardan localmente en tu navegador).</p>
+
+        <div class="illustrations-controls">
+          <label class="btn" for="illustration-input">Subir imágenes</label>
+          <input id="illustration-input" class="illustration-input" type="file" accept="image/*" multiple />
+          <button id="clear-illustrations" class="btn btn--ghost" type="button">Borrar galería</button>
+        </div>
+
+        <div id="illustrations-gallery" class="gallery-grid" aria-live="polite"></div>
+      </section>
     </section>
   </main>
   <footer></footer>

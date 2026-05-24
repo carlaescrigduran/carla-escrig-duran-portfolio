@@ -633,6 +633,101 @@ function ensureContactExtras() {
   }
 }
 
+/* ---------- Illustrations upload + preview (localStorage) ---------- */
+const ILLU_KEY = "personal_illustrations";
+
+function loadIllustrations() {
+  try {
+    const raw = localStorage.getItem(ILLU_KEY);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveIllustrations(arr) {
+  try {
+    localStorage.setItem(ILLU_KEY, JSON.stringify(arr.slice(0, 100)));
+  } catch {}
+}
+
+function renderIllustrations() {
+  const container = $("#illustrations-gallery");
+  if (!container) return;
+  const items = loadIllustrations();
+  container.innerHTML = "";
+  if (!items.length) {
+    container.innerHTML = `<div class="gallery-empty">No hay imágenes aún. Usa "Subir imágenes" para añadir previsualizaciones.</div>`;
+    return;
+  }
+
+  items.forEach((dataUrl, idx) => {
+    const item = document.createElement("div");
+    item.className = "gallery-item";
+    item.innerHTML = `
+      <img src="${dataUrl}" alt="Illustration ${idx + 1}" loading="lazy">
+      <div class="item-actions">
+        <button class="small-btn" data-action="download" data-idx="${idx}">↓</button>
+        <button class="small-btn" data-action="delete" data-idx="${idx}">✕</button>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+function handleIllustrationFiles(files) {
+  if (!files || !files.length) return;
+  const cur = loadIllustrations();
+  const toRead = Array.from(files).slice(0, 50);
+  let readCount = 0;
+  toRead.forEach((f) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      cur.push(e.target.result);
+      readCount += 1;
+      if (readCount === toRead.length) {
+        saveIllustrations(cur);
+        renderIllustrations();
+      }
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+function wireIllustrationEvents() {
+  const input = $("#illustration-input");
+  input?.addEventListener("change", (e) => {
+    handleIllustrationFiles(e.target.files);
+    input.value = "";
+  });
+
+  $("#illustrations-gallery")?.addEventListener("click", (e) => {
+    const btn = e.target.closest && e.target.closest("button[data-action]");
+    if (!btn) return;
+    const idx = Number(btn.dataset.idx);
+    const action = btn.dataset.action;
+    const items = loadIllustrations();
+    if (action === "delete") {
+      items.splice(idx, 1);
+      saveIllustrations(items);
+      renderIllustrations();
+    } else if (action === "download") {
+      const link = document.createElement("a");
+      link.href = items[idx];
+      link.download = `illustration-${idx + 1}.png`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+  });
+
+  $("#clear-illustrations")?.addEventListener("click", () => {
+    localStorage.removeItem(ILLU_KEY);
+    renderIllustrations();
+  });
+}
+
 function renderContact() {
   ensureContactExtras();
 
@@ -868,6 +963,8 @@ function init() {
   applyTheme();
   renderAll();
   wireEvents();
+  renderIllustrations();
+  wireIllustrationEvents();
 }
 
 init();

@@ -1339,3 +1339,20 @@ html[data-theme="dark"] .timeline-visual {
     transform: scale(1.06);
   }
 }
+
+  /* Illustrations gallery */
+  .illustrations { padding: 18px 16px; margin-top: 18px; }
+  .illustrations h3 { margin: 0 0 8px; font-size: 28px; }
+  .illustrations .muted { color: var(--muted); margin: 6px 0 12px; }
+  .illustrations-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+  .illustration-input { display: none; }
+  .gallery-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .gallery-item { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--card-border); background: var(--card); }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gallery-item .item-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; }
+  .gallery-item .small-btn { background: rgba(0,0,0,0.5); color: #fff; border: 0; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
+  .gallery-empty { color: var(--muted); padding: 18px; border-radius: 12px; border: 1px dashed var(--card-border); background: transparent; text-align: center; }
+
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+  }

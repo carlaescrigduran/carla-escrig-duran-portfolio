@@ -703,6 +703,11 @@ html[data-theme="dark"] .thesis-phase:nth-child(even) {
   display: block;
 }
 
+.thesis-video {
+  margin: 0 auto 18px;
+  max-width: 900px;
+}
+
 .tabs {
   display: flex;
   flex-wrap: wrap;

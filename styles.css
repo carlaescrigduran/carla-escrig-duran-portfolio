@@ -578,6 +578,25 @@ p { line-height: 1.6; }
   box-shadow: var(--shadow-sm);
   padding: clamp(20px, 4vw, 40px);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.thesis-phase__media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.thesis-phase__media iframe,
+.thesis-phase__media video {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 .thesis-phase__index {
@@ -701,11 +720,6 @@ html[data-theme="dark"] .thesis-phase:nth-child(even) {
   border: 0;
   object-fit: cover;
   display: block;
-}
-
-.thesis-video {
-  margin: 0 auto 18px;
-  max-width: 900px;
 }
 
 .tabs {

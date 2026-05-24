@@ -533,10 +533,13 @@ function renderThesis() {
     const groupLabel = p.group[state.lang] || p.group.en;
     const desc = p.desc[state.lang] || p.desc.en;
 
-    // If the phase includes a link, make video the primary element
+    const inner = document.createElement("div");
+    inner.className = "thesis-phase__inner";
+
+    // If the phase includes a link, add video inside the white box
     if (p.link) {
       const mediaContainer = document.createElement("div");
-      mediaContainer.className = "media thesis-video";
+      mediaContainer.className = "thesis-phase__media";
       let embed = null;
       if (p.link.includes("vimeo.com")) {
         const v = vimeoEmbedFromUrl(p.link) || p.link;
@@ -550,31 +553,17 @@ function renderThesis() {
         embed = `<iframe src="${p.link}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
       }
       mediaContainer.innerHTML = embed;
-      phase.appendChild(mediaContainer);
-
-      // Add text content below video
-      const inner = document.createElement("div");
-      inner.className = "thesis-phase__inner";
-      inner.innerHTML = `
-        <p class="thesis-phase__index">${String(i + 1).padStart(2, "0")}</p>
-        <p class="thesis-phase__meta">${phaseLabel}</p>
-        <h3 class="thesis-phase__title">${title}</h3>
-        <p class="badge thesis-phase__group">${groupLabel}</p>
-        <p class="thesis-phase__desc">${desc}</p>
-      `;
-      phase.appendChild(inner);
-    } else {
-      phase.innerHTML = `
-        <div class="thesis-phase__inner">
-          <p class="thesis-phase__index">${String(i + 1).padStart(2, "0")}</p>
-          <p class="thesis-phase__meta">${phaseLabel}</p>
-          <h3 class="thesis-phase__title">${title}</h3>
-          <p class="badge thesis-phase__group">${groupLabel}</p>
-          <p class="thesis-phase__desc">${desc}</p>
-        </div>
-      `;
+      inner.appendChild(mediaContainer);
     }
 
+    inner.innerHTML += `
+      <p class="thesis-phase__index">${String(i + 1).padStart(2, "0")}</p>
+      <p class="thesis-phase__meta">${phaseLabel}</p>
+      <h3 class="thesis-phase__title">${title}</h3>
+      <p class="badge thesis-phase__group">${groupLabel}</p>
+      <p class="thesis-phase__desc">${desc}</p>
+    `;
+    phase.appendChild(inner);
     sections.appendChild(phase);
   });
 }

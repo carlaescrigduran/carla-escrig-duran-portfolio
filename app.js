@@ -271,6 +271,7 @@ const thesisPhases = [
       en: "The culmination of our team's hard work - watch the final animated short film.",
       es: "El resultado final del trabajo del equipo: mira el corto final.",
     },
+    link: "https://youtu.be/3xQGl8kr6ZI?si=XaNRQD6XlcSlnXpB",
   },
   {
     group: { en: "PRE-PRODUCTION", es: "PREPRODUCCIÓN" },

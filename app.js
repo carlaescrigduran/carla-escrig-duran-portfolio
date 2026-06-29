@@ -28,6 +28,7 @@ const CONTENT = {
   },
   welcome: { en: "", es: "" },
 
+  animationReelSrc: "",
   visdevReelSrc: "Reels/2425_CarlaEscrig_Concept_Reel_V5.mp4",
 
   contact: {
@@ -607,10 +608,12 @@ function renderReel() {
 
   reel.innerHTML = "";
 
+  const src = CONTENT.animationReelSrc;
+  if (!src) return;
+
   const wrapper = document.createElement("div");
   wrapper.className = "media";
 
-  const src = CONTENT.animationReelSrc;
   let embedUrl = null;
   if (src.includes('vimeo.com')) {
     embedUrl = vimeoEmbedFromUrl(src);

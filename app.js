@@ -28,7 +28,7 @@ const CONTENT = {
   },
   welcome: { en: "", es: "" },
 
-  animationReelSrc: "",
+  animationReelSrc: "Reels/Carla Escrig Duran 3D Animation Reel.mp4",
   visdevReelSrc: "Reels/2425_CarlaEscrig_Concept_Reel_V5.mp4",
 
   contact: {
